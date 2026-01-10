@@ -8,13 +8,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>isaacs-word-puzzle</title>
   </head>
-  <body class="h-full">
+  <body>
     <div class="center" style="width: 0; height: 0;">
         <div id="gameContainer" hidden>
 
             <!-- Contains all buttons -->
             <div id="buttonContainer">
                 <button id="undo-button" onclick="undo()">Undo</button>
+
+                <div id="instructions">
+                    <p>
+                        Get from the starting word to the target word in as
+                        few moves as possible.
+                    </p>
+                    <p>
+                        <strong>Valid Moves:</strong><br/>
+                        Change a single letter <br/>
+                        - OR -<br/>
+                        Make an anagram.
+                    </p>
+                    <p>All moves must form a real word.</p>
+                </div>
             </div>
 
             <div id="inputContainer" class="wordDisplay">
@@ -40,6 +54,11 @@
             <source src="/src/autism.mp4" type="video/mp4">
         </video>
     </div>
+
+    <footer class="flex flex-col place-items-center">
+        <span>Game by Isaac Kneubuhl</span>
+        <span>Website by Tyler Johnson</span>
+    </footer>
   </body>
 <script src="/src/main.js" type="module"></script>
 </html>
