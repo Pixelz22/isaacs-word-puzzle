@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="src/layout.css" />
+      <link rel="stylesheet" type="text/css" href="src/keyboard.css" />
     <link rel="stylesheet" type="text/css" href="src/style.css" />
     <link rel="stylesheet" type="text/css" href="src/words.css" />
     <link rel="stylesheet" type="text/css" href="src/small.css" />
@@ -29,7 +30,7 @@
                 </button>
             </div>
 
-            <div id="inputContainer" class="wordDisplay">
+            <div id="inputContainer" class="wordDisplay text-lg">
                 <input id="wordInput" class="wordInput" value=""
                        maxlength="5" pattern="[a-zA-Z]{5}" autocomplete="off">
             </div>
@@ -49,7 +50,7 @@
 
         <!-- Victory stuff -->
         <div id="victoryContainer">
-            <div id="victoryDisplay" class="wordDisplay" hidden></div>
+            <div id="victoryDisplay" class="wordDisplay text-lg" hidden></div>
             <div id="victoryText" hidden>
                 You got it in <br/>
                 <span class="text-lg">
@@ -63,11 +64,50 @@
         </div>
     </div>
 
+    <div id="keyboardContainer" class="flex flex-col place-items-center space-y-2" hidden>
+        <div class="flex place-items-center space-x-2">
+            <button class="key">Q</button>
+            <button class="key">W</button>
+            <button class="key">E</button>
+            <button class="key">R</button>
+            <button class="key">T</button>
+            <button class="key">Y</button>
+            <button class="key">U</button>
+            <button class="key">I</button>
+            <button class="key">O</button>
+            <button class="key">P</button>
+        </div>
+        <div class="flex place-items-center space-x-2">
+            <button class="key">A</button>
+            <button class="key">S</button>
+            <button class="key">D</button>
+            <button class="key">F</button>
+            <button class="key">G</button>
+            <button class="key">H</button>
+            <button class="key">J</button>
+            <button class="key">K</button>
+            <button class="key">L</button>
+        </div>
+        <div class="flex place-items-center space-x-2">
+            <button class="key text-xs">ENTER</button>
+            <button class="key">Z</button>
+            <button class="key">X</button>
+            <button class="key">C</button>
+            <button class="key">V</button>
+            <button class="key">B</button>
+            <button class="key">N</button>
+            <button class="key">M</button>
+            <button class="key">
+                <ion-icon name="backspace-outline" class="h-full"></ion-icon>
+            </button>
+        </div>
+    </div>
+
     <!-- Credits -->
-    <footer class="flex flex-col place-items-center">
+    <div class="credits flex flex-col place-items-center text-xs">
         <span>Game by Isaac Kneubuhl</span>
         <span>Website by Tyler Johnson</span>
-    </footer>
+    </div>
 
   <div id="cover" hidden></div>
   <div id="helpText" class="center" hidden>

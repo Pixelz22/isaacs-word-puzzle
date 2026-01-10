@@ -1,0 +1,31 @@
+#keyboardContainer {
+    position: absolute;
+    box-sizing: border-box;
+    bottom: 0;
+    width: 100%;
+
+    padding: 24px;
+
+    transition: transform 1s;
+}
+
+@media (min-width: 512px) {
+    #keyboardContainer {
+        transform: translateY(100%);
+    }
+}
+
+.key {
+    background-color: lightgray;
+    padding: 0px 5px;
+
+    height: 42px;
+
+    border: none;
+    border-radius: 4px;
+
+    font-family: monospace;
+    font-weight: bold;
+
+    font-size: 32px;
+}

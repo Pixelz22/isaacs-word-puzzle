@@ -1,9 +1,58 @@
-@media (max-width: 700px) {
+@media (max-width: 512px) {
 
-    /*
+    /* FOR TESTING so I can know when it actives*/
     body {
-        background-color: red;
+        background-color: rgb(255, 230, 230);
     }
-     */
-    
+
+    .text-xs {
+        font-size: 12px;
+    }
+
+    .text-sm {
+        font-size: 24px;
+    }
+
+    .text-md {
+        font-size: 24px;
+    }
+
+    .text-lg {
+        font-size: 48px;
+    }
+
+    .wordDisplay {
+        padding: 5px 15px;
+
+        width: 164px;
+        height: 60px;
+    }
+
+    #undo-button {
+        left: -125px;
+    }
+
+    #help-button {
+        left: 125px;
+    }
+
+    #targetContainer {
+        top: 50px;
+    }
+
+    #gameContainer {
+        position: absolute;
+        bottom: 50px;
+    }
+
+    .credits {
+        box-sizing: border-box;
+        top: 0;
+        bottom: unset;
+        right: 0;
+
+        padding: 10px 10px;
+
+        place-items: end;
+    }
 }

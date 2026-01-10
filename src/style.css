@@ -5,6 +5,8 @@
 body {
     margin: 0;
     padding: 0;
+
+    overflow: hidden; /* prevent scrollbar from appearing when things go over the bounds */
 }
 
 #cover {
@@ -50,7 +52,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-footer {
+.credits {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -99,6 +101,10 @@ footer {
 
 #moveCounter {
     font-weight: bold;
+}
+
+.text-xs {
+    font-size: 16px;
 }
 
 .text-sm {

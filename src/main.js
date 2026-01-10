@@ -11,7 +11,7 @@ const RESET_BUTTON = document.getElementById("resetButton");
 const HELP_BUTTON = document.getElementById("help-button");
 const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 
-const WORD_DISPLAY_OFFSET = -100; // in px
+let WORD_DISPLAY_OFFSET = -100; // in px
 
 /* Animation Functions */
 
@@ -27,6 +27,10 @@ function beginGameAnimation() {
     gameContainer.hidden = false;
     gameContainer.style.animation = "reveal 3s ease-in-out";
 
+    let keyboardContainer = document.getElementById("keyboardContainer");
+    keyboardContainer.hidden = true;
+    keyboardContainer.style.animation = "none";
+
     setTimeout(() => {
         targetContainer.hidden = false;
         targetContainer.style.animation = "reveal 3s ease-in-out forwards";
@@ -35,6 +39,10 @@ function beginGameAnimation() {
             revealInputAnimation();
             buttonContainer.hidden = false;
             buttonContainer.style.animation = "reveal 2s ease-in-out";
+
+            let keyboardContainer = document.getElementById("keyboardContainer");
+            keyboardContainer.hidden = false;
+            keyboardContainer.style.animation = "reveal 2s ease-in-out";
 
             WORD_INPUT.focus();
         }, 3000);
@@ -54,6 +62,10 @@ function resumeGameAnimation() {
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.hidden = false;
     gameContainer.style.animation = "reveal 3s ease-in-out";
+
+    let keyboardContainer = document.getElementById("keyboardContainer");
+    keyboardContainer.hidden = false;
+    keyboardContainer.style.animation = "reveal 3s ease-in-out";
 
     setTimeout(() => {
         WORD_INPUT.focus();
@@ -142,7 +154,7 @@ function hideHelpText() {
 
 function constructWordDisplay(word) {
     let newBlock = document.createElement("div");
-    newBlock.className = "wordDisplay smoothMovement";
+    newBlock.className = "wordDisplay text-lg smoothMovement";
     newBlock.innerHTML = word;
     newBlock.style.top = "0";
 
@@ -282,9 +294,24 @@ HELP_BUTTON.addEventListener("click", function (event) {
     revealHelpText();
 });
 
-
 CLOSE_HELP_BUTTON.addEventListener("click", function (event) {
     hideHelpText();
+});
+
+
+
+function correctScreenSize() {
+    if (window.innerWidth <= 512 && WORD_DISPLAY_OFFSET !== -50) {
+        WORD_DISPLAY_OFFSET = -80
+        formatHistory();
+    } else if (WORD_DISPLAY_OFFSET !== -100) {
+        WORD_DISPLAY_OFFSET = -100
+        formatHistory();
+    }
+}
+
+addEventListener("resize", function (event) {
+    correctScreenSize();
 });
 
 
@@ -345,6 +372,8 @@ function endGame() {
 
 async function onload() {
     await loadWordList();
+
+    correctScreenSize();
 
     // Check for session storage
     let startWord = sessionStorage.getItem("startWord");
