@@ -44,11 +44,21 @@ function victoryAnimation() {
     victoryDisplay.style.animation = "victory 3s ease-in-out forwards";
     victoryDisplay.hidden = false;
 
+    let victoryText = document.getElementById("victoryText");
+    victoryText.hidden = true;
+    let moveCounter = document.getElementById("moveCounter");
+    moveCounter.innerHTML = (HISTORY.length + 1).toString();
+
+    setTimeout( () => {
+        victoryText.hidden = false;
+        victoryText.style.animation = "reveal 2s ease-in-out forwards";
+    }, 1500)
+
     setTimeout(() => {
         let victoryVideo = document.getElementById("victoryVideo");
         victoryVideo.hidden = false;
         victoryVideo.play();
-    }, 3500);
+    }, 4000);
 }
 
 function badSubmit() {
@@ -225,4 +235,4 @@ function startGame(startWord, targetWord) {
     beginGameAnimation();
 }
 
-startGame("GRAVE", "MERGE");
+startGame("QUITS", "QUILT");
