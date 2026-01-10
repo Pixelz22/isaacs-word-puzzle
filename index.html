@@ -5,7 +5,13 @@
     <link rel="stylesheet" type="text/css" href="src/layout.css" />
     <link rel="stylesheet" type="text/css" href="src/style.css" />
     <link rel="stylesheet" type="text/css" href="src/words.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="src/small.css" />
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
     <title>isaacs-word-puzzle</title>
   </head>
   <body>
@@ -14,21 +20,13 @@
 
             <!-- Contains all buttons -->
             <div id="buttonContainer">
-                <button id="undo-button" onclick="undo()">Undo</button>
+                <button id="undo-button" class="icon-button">
+                    <ion-icon name="arrow-undo" class="text-md"></ion-icon>
+                </button>
 
-                <div id="instructions">
-                    <p>
-                        Get from the starting word to the target word in as
-                        few moves as possible.
-                    </p>
-                    <p>
-                        <strong>Valid Moves either:</strong><br/>
-                        Change a single letter <br/>
-                        - OR -<br/>
-                        Make an anagram.
-                    </p>
-                    <p>All moves must form a real 5-letter word.</p>
-                </div>
+                <button id="help-button"  class="icon-button">
+                    <ion-icon name="help-circle-outline" class="text-lg"></ion-icon>
+                </button>
             </div>
 
             <div id="inputContainer" class="wordDisplay">
@@ -43,7 +41,7 @@
             </div>
 
             <div id="targetContainer" class="flex flex-col place-items-center">
-                <span class="text-md">Target:</span>
+                <span class="text-sm">Target:</span>
                 <span id="targetWord" class="text-lg">CRYPT</span>
             </div>
 
@@ -70,6 +68,25 @@
         <span>Game by Isaac Kneubuhl</span>
         <span>Website by Tyler Johnson</span>
     </footer>
+
+  <div id="cover" hidden></div>
+  <div id="helpText" class="center" hidden>
+      <p>
+          Get from the starting word to the target word in as
+          few moves as possible.
+      </p>
+      <p>
+          <strong>Valid Moves either:</strong><br/>
+          Change a single letter <br/>
+          - OR -<br/>
+          Make an anagram.
+      </p>
+      <p>All moves must form a real 5-letter word.</p>
+
+      <button id="closeHelp" class="icon-button">
+          <ion-icon name="close" class="text-md"></ion-icon>
+      </button>
+  </div>
   </body>
 <script src="src/main.js" type="module"></script>
 </html>

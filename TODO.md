@@ -6,5 +6,6 @@
     - number of moves
 - [ ] change puzzle each day
 - [x] save move history on page refresh
+- [ ] add sfx
 - [ ] change victory animation to show history
 - [ ] change the valid words to be actual words lol

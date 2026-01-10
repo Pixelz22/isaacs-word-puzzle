@@ -8,6 +8,8 @@ const WORD_INPUT = document.getElementById("wordInput");
 const INPUT_CONTAINER = document.getElementById("inputContainer");
 const UNDO_BUTTON = document.getElementById("undo-button");
 const RESET_BUTTON = document.getElementById("resetButton");
+const HELP_BUTTON = document.getElementById("help-button");
+const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 
 const WORD_DISPLAY_OFFSET = -100; // in px
 
@@ -118,6 +120,24 @@ function revealInputAnimation() {
         formatHistory();
         INPUT_CONTAINER.style.animation = "reveal 1s";
     });
+}
+
+function revealHelpText() {
+    let cover = document.getElementById("cover");
+    let helpText = document.getElementById("helpText");
+    cover.hidden = false;
+    helpText.hidden = false;
+
+    cover.style.animation = "reveal 1s forwards";
+    helpText.style.animation = "reveal 1s forwards";
+}
+
+function hideHelpText() {
+    let cover = document.getElementById("cover");
+    let helpText = document.getElementById("helpText");
+
+    cover.style.animation = "hide 1s forwards";
+    helpText.style.animation = "hide 1s forwards";
 }
 
 function constructWordDisplay(word) {
@@ -256,6 +276,15 @@ UNDO_BUTTON.addEventListener("click", function (event) {
 
 RESET_BUTTON.addEventListener("click", function (event) {
     startGame(STARTING_WORD, TARGET_WORD);
+});
+
+HELP_BUTTON.addEventListener("click", function (event) {
+    revealHelpText();
+});
+
+
+CLOSE_HELP_BUTTON.addEventListener("click", function (event) {
+    hideHelpText();
 });
 
 
