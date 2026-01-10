@@ -50,16 +50,19 @@
         </div>
 
         <!-- Victory stuff -->
-        <div id="victoryDisplay" class="wordDisplay" hidden></div>
-        <div id="victoryText" hidden>
-            You got it in <br/>
-            <span class="text-lg">
-                <span id="moveCounter"></span> moves.
-            </span>
+        <div id="victoryContainer">
+            <div id="victoryDisplay" class="wordDisplay" hidden></div>
+            <div id="victoryText" hidden>
+                You got it in <br/>
+                <span class="text-lg">
+                    <span id="moveCounter"></span> moves.
+                </span>
+                <button id="resetButton">Try Again</button>
+            </div>
+            <video id="victoryVideo" muted hidden>
+                <source src="src/autism.mp4" type="video/mp4">
+            </video>
         </div>
-        <video id="victoryVideo" muted hidden>
-            <source src="src/autism.mp4" type="video/mp4">
-        </video>
     </div>
 
     <!-- Credits -->

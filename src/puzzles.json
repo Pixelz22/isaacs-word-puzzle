@@ -1,0 +1,12 @@
+[
+  {
+    "start": "QUITS",
+    "target": "QUILL",
+    "moveCount": 4
+  },
+  {
+    "start": "GAMER",
+    "target": "ADAPT",
+    "moveCount": 5
+  }
+]

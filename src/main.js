@@ -2,9 +2,12 @@ import {loadWordList, assertValidWord, resetGame } from "./game-logic.js";
 import { checkForLetterChange, checkForAnagram } from "./game-logic.js";
 import { HISTORY, STARTING_WORD, TARGET_WORD } from "./game-logic.js";
 
+import PUZZLES from "./puzzles.json" with { type: "json" }
+
 const WORD_INPUT = document.getElementById("wordInput");
 const INPUT_CONTAINER = document.getElementById("inputContainer");
 const UNDO_BUTTON = document.getElementById("undo-button");
+const RESET_BUTTON = document.getElementById("resetButton");
 
 const WORD_DISPLAY_OFFSET = -100; // in px
 
@@ -13,8 +16,10 @@ const WORD_DISPLAY_OFFSET = -100; // in px
 function beginGameAnimation() {
     let buttonContainer = document.getElementById("buttonContainer");
     buttonContainer.hidden = true;
+    buttonContainer.style.animation = "none";
     let targetContainer = document.getElementById("targetContainer");
     targetContainer.style.opacity = "0";
+    targetContainer.style.animation = "none";
 
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.hidden = false;
@@ -39,6 +44,9 @@ function victoryAnimation() {
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.style.animation = "hide 1.5s ease-in-out forwards";
 
+    let victoryContainer = document.getElementById("victoryContainer");
+    victoryContainer.hidden = false;
+
     let victoryDisplay = document.getElementById("victoryDisplay");
     victoryDisplay.innerHTML = TARGET_WORD;
     victoryDisplay.style.animation = "victory 3s ease-in-out forwards";
@@ -46,8 +54,12 @@ function victoryAnimation() {
 
     let victoryText = document.getElementById("victoryText");
     victoryText.hidden = true;
+
     let moveCounter = document.getElementById("moveCounter");
     moveCounter.innerHTML = (HISTORY.length + 1).toString();
+
+    let victoryVideo = document.getElementById("victoryVideo");
+    victoryVideo.hidden = true;
 
     setTimeout( () => {
         victoryText.hidden = false;
@@ -55,7 +67,6 @@ function victoryAnimation() {
     }, 1500)
 
     setTimeout(() => {
-        let victoryVideo = document.getElementById("victoryVideo");
         victoryVideo.hidden = false;
         victoryVideo.play();
     }, 4000);
@@ -209,15 +220,21 @@ WORD_INPUT.addEventListener("input", function (event) {
 
 UNDO_BUTTON.addEventListener("click", function (event) {
     undo();
-})
+});
+
+RESET_BUTTON.addEventListener("click", function (event) {
+    startGame(STARTING_WORD, TARGET_WORD);
+});
 
 
 
 //
-loadWordList();
 
 function startGame(startWord, targetWord) {
     resetGame(startWord, targetWord);
+
+    let victoryContainer = document.getElementById("victoryContainer");
+    victoryContainer.hidden = true;
 
     let historyContainer = document.getElementById("historyContainer");
     historyContainer.replaceChildren();
@@ -235,4 +252,25 @@ function startGame(startWord, targetWord) {
     beginGameAnimation();
 }
 
-startGame("QUITS", "QUILL");
+async function onload() {
+    await loadWordList();
+
+    let puzzle = PUZZLES[Math.floor(Math.random() * PUZZLES.length)];
+
+    let startWord = puzzle["start"];
+    let targetWord = puzzle["target"];
+
+    // read words from query string if it exists
+    const urlParams = new URLSearchParams(window.location.search);
+    const queryStartWord = urlParams.get("startWord");
+    const queryTargetWord = urlParams.get("targetWord");
+
+    if (queryStartWord !== null && assertValidWord(queryStartWord))
+        startWord = queryStartWord;
+    if (queryTargetWord !== null && assertValidWord(queryTargetWord))
+        targetWord = queryTargetWord;
+
+    startGame(startWord, targetWord);
+}
+
+await onload();

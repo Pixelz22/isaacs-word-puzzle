@@ -14,7 +14,7 @@ export function resetGame(startWord, targetWord) {
 }
 
 export function loadWordList() {
-    fetch("https://raw.githubusercontent.com/tabatkins/wordle-list/main/words").then((response) => {
+    return fetch("https://raw.githubusercontent.com/tabatkins/wordle-list/main/words").then((response) => {
         return response.text();
     }).then((data) => {
         data.toUpperCase().split("\n").forEach((word) => {VALID_WORDS.add(word)});

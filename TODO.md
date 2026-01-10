@@ -1,6 +1,6 @@
 - [ ] format CSS for mobile layouts
-- [ ] add reset button
-- [ ] upload file with multiple puzzles
+- [x] add reset button
+- [x] upload file with multiple puzzles
     - start word
     - target word
     - number of moves
