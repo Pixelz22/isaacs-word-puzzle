@@ -1,0 +1,124 @@
+
+/* Base classes applied to most words */
+.wordDisplay {
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    background-color: darkgray;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+
+    padding: 0.5rem 1.5rem;
+    width: 208px;
+    height: 80px;
+
+    color: white;
+    font-family: monospace;
+    letter-spacing: 0.5rem;
+    font-size: 64px;
+    font-weight: bold;
+    text-transform: uppercase;
+    /*text-align: center;*/
+}
+
+.smoothMovement {
+    transition: top 0.3s ease-out, opacity 0.3s linear;
+}
+
+/* Specific types of words */
+.wordInput {
+    background: none;
+    border: none;
+    outline: none;
+
+    width: 110%;
+
+    margin: 0;
+    padding: 0;
+
+    color: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+.startingWord {
+    background-color: indianred;
+}
+
+.wordHistory {
+    top: 0;
+    opacity: 60%;
+}
+
+.anagramMove {
+    background-color: gold;
+}
+
+.letterMove {
+    color: yellow;
+}
+
+
+/* Animations */
+
+@keyframes inputRealign {
+    from {
+        top: -100px;
+    }
+
+    to {
+        top: 0;
+    }
+}
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes inputDisappear {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes NoSubmit {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(10px);
+    }
+
+    40% {
+        transform: translateX(-10px);
+    }
+
+    60% {
+        transform: translateX(10px);
+    }
+
+    80% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

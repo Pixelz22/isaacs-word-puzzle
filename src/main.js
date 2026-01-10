@@ -1,46 +1,34 @@
+import { loadWordList, assertValidWord } from "./game-logic.js";
+import { checkForLetterChange, checkForAnagram } from "./game-logic.js";
+import { HISTORY, STARTING_WORD } from "./game-logic.js";
+
 let WORD_INPUT = document.getElementById("wordInput");
 let INPUT_CONTAINER = document.getElementById("inputContainer");
 
-const WORD_LENGTH = 5;
-
 const WORD_DISPLAY_OFFSET = -100; // in px
 
-let STARTING_WORD = "GRAVE";
-let HISTORY = [];
+/* Animation Functions */
 
-let VALID_WORDS = new Set();
+function beginGameAnimation() {
+    let buttonContainer = document.getElementById("buttonContainer");
+    buttonContainer.hidden = true;
+    let gameContainer = document.getElementById("gameContainer");
+    gameContainer.style.animation = "reveal 3s ease-in-out";
 
-// returns index of changed letter
-function checkForLetterChange(start, move) {
-    let letterChange = -1;
-    for (let i = 0; i < WORD_LENGTH; i++) {
-        if (start[i] !== move[i]) {
-            if (letterChange >= 0)
-                return -1; // two letters different
-            letterChange = i;
-        }
-    }
+    setTimeout(() => {
+        revealInputAnimation();
 
-    return letterChange;
+        buttonContainer.hidden = false;
+        buttonContainer.style.animation = "reveal 2s ease-in-out";
+    }, 3000);
 }
 
-function checkForAnagram(start, move) {
-    // then check for anagram
-    let startAnalysis = new Array(26).fill(0);
-    let moveAnalysis = new Array(26).fill(0);
-
-    const charCodeA = "A".charCodeAt(0);
-
-    for (let i = 0; i < WORD_LENGTH; i++) {
-        startAnalysis[start.charCodeAt(i) - charCodeA]++;
-        moveAnalysis[move.charCodeAt(i) - charCodeA]++;
-    }
-
-    let diff = 0;
-    for (let i = 0; i < 26; i++)
-        if (startAnalysis[i] !== moveAnalysis[i]) return false;
-
-    return true;
+function badSubmit() {
+    INPUT_CONTAINER.style.animation = "none";
+    setTimeout(() => {
+        INPUT_CONTAINER.style.animationComposition = "accumulate";
+        INPUT_CONTAINER.style.animation = "NoSubmit 0.5s";
+    });
 }
 
 function formatHistory() {
@@ -55,18 +43,21 @@ function formatHistory() {
     }
 }
 
-function badSubmit() {
+function revealInputAnimation() {
     INPUT_CONTAINER.style.animation = "none";
+    WORD_INPUT.value = "";
+
     setTimeout(() => {
-        INPUT_CONTAINER.style.animationComposition = "accumulate";
-        INPUT_CONTAINER.style.animation = "NoSubmit 0.5s";
+        formatHistory();
+        INPUT_CONTAINER.style.animation = "reveal 1s";
     });
 }
 
 function constructWordDisplay(word) {
     let newBlock = document.createElement("div");
-    newBlock.className = "wordDisplay wordHistory";
+    newBlock.className = "wordDisplay smoothMovement";
     newBlock.innerHTML = word;
+    newBlock.style.top = "0";
 
     return newBlock;
 }
@@ -74,7 +65,7 @@ function constructWordDisplay(word) {
 function submitWord() {
     let word = WORD_INPUT.value.toUpperCase();
 
-    if (word.length < WORD_LENGTH || !VALID_WORDS.has(word)) {
+    if (!assertValidWord(word)) {
         badSubmit();
         return;
     }
@@ -100,7 +91,7 @@ function submitWord() {
         newDisplay.innerHTML = firstSegment + secondSegment + thirdSegment;
     } else if (checkForAnagram(lastWord, word)) {
         newDisplay = constructWordDisplay(word);
-        newDisplay.classList.add("anagramMove")
+        newDisplay.classList.add("anagramMove");
     } else {
         badSubmit();
         return;
@@ -112,13 +103,10 @@ function submitWord() {
     let historyContainer = document.getElementById("historyContainer");
     historyContainer.append(newDisplay);
 
-    INPUT_CONTAINER.style.animation = "none";
-    WORD_INPUT.value = "";
-
-    setTimeout(() => {
-        formatHistory();
-        INPUT_CONTAINER.style.animation = "inputReappear 1s";
+    setTimeout( () => {
+        newDisplay.classList.add("wordHistory")
     });
+    revealInputAnimation();
 }
 
 function undo() {
@@ -157,15 +145,6 @@ function undo() {
     WORD_INPUT.focus();
 }
 
-function loadWordList() {
-    fetch("https://raw.githubusercontent.com/tabatkins/wordle-list/main/words").then((response) => {
-        return response.text();
-    }).then((data) => {
-       data.toUpperCase().split("\n").forEach((word) => {VALID_WORDS.add(word)});
-       console.log(VALID_WORDS);
-    });
-}
-
 WORD_INPUT.addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -180,5 +159,13 @@ WORD_INPUT.addEventListener("input", function (event) {
 
 //
 loadWordList();
-document.getElementById("startingWord").innerHTML = STARTING_WORD;
-formatHistory();
+
+function startGame(startingWord, targetWord) {
+    let startingWordContainer = document.getElementById("startingWord");
+    startingWordContainer.innerHTML = STARTING_WORD;
+    startingWordContainer.style.top = "0";
+
+    beginGameAnimation();
+}
+
+startGame("GRAVE", "CRYPT");

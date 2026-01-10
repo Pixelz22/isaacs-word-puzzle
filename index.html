@@ -4,25 +4,31 @@
     <meta charset="UTF-8" />
     <link rel="stylesheet" type="text/css" href="/src/layout.css" />
     <link rel="stylesheet" type="text/css" href="/src/style.css" />
+    <link rel="stylesheet" type="text/css" href="/src/words.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>isaacs-word-puzzle</title>
   </head>
   <body class="h-full">
-    <div class="center">
-        <div>
-            <button class="undo-button" onclick="undo()">Undo</button>
+    <div class="center" style="width: 0; height: 0;">
+        <div id="gameContainer">
+
+            <!-- Contains all buttons -->
+            <div id="buttonContainer">
+                <button class="undo-button" onclick="undo()">Undo</button>
+            </div>
 
             <div id="inputContainer" class="wordDisplay">
                 <input id="wordInput" class="wordInput" value="" maxlength="5" pattern="[a-zA-Z]{5}">
             </div>
-
             <div id="oldInput" class="wordDisplay" style="text-align: left" hidden></div>
 
+            <!-- Past moves -->
             <div id="historyContainer">
-                <div id="startingWord" class="wordDisplay wordHistory startingWord"></div>
+                <div id="startingWord" class="wordDisplay smoothMovement startingWord"></div>
             </div>
+
         </div>
     </div>
   </body>
-<script src="/src/main.js" type="application/javascript"></script>
+<script src="/src/main.js" type="module"></script>
 </html>
