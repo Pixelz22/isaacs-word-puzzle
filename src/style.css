@@ -5,7 +5,7 @@
     transform: translate(-50%, -50%);
 }
 
-.undo-button {
+#undo-button {
     position: absolute;
     transform: translate(-50%, -50%);
 

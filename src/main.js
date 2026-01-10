@@ -2,8 +2,9 @@ import {loadWordList, assertValidWord, resetGame } from "./game-logic.js";
 import { checkForLetterChange, checkForAnagram } from "./game-logic.js";
 import { HISTORY, STARTING_WORD, TARGET_WORD } from "./game-logic.js";
 
-let WORD_INPUT = document.getElementById("wordInput");
-let INPUT_CONTAINER = document.getElementById("inputContainer");
+const WORD_INPUT = document.getElementById("wordInput");
+const INPUT_CONTAINER = document.getElementById("inputContainer");
+const UNDO_BUTTON = document.getElementById("undo-button");
 
 const WORD_DISPLAY_OFFSET = -100; // in px
 
@@ -167,15 +168,27 @@ WORD_INPUT.addEventListener("input", function (event) {
     this.value = this.value.replace(/[^a-zA-Z]/, "");
 });
 
+UNDO_BUTTON.addEventListener("click", function (event) {
+    undo();
+})
+
+
+
 //
 loadWordList();
 
 function startGame(startWord, targetWord) {
     resetGame(startWord, targetWord);
 
-    let startingWordContainer = document.getElementById("startingWord");
+    let historyContainer = document.getElementById("historyContainer");
+    historyContainer.replaceChildren();
+
+    let startingWordContainer = document.createElement("div");
+    startingWordContainer.id = "startingWord";
+    startingWordContainer.className = "wordDisplay smoothMovement startingWord";
     startingWordContainer.innerHTML = STARTING_WORD;
     startingWordContainer.style.top = "0";
+    historyContainer.append(startingWordContainer);
 
     let targetWordContainer = document.getElementById("targetWord");
     targetWordContainer.innerHTML = TARGET_WORD;
