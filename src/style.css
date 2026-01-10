@@ -28,3 +28,48 @@
 .text-lg {
     font-size: 64px;
 }
+
+#victoryVideo {
+    position: absolute;
+    transform: translate(-50%, 0);
+
+    bottom: 60px;
+
+    height: 300px;
+}
+
+
+
+@keyframes reveal {
+    from {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hide {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes victory {
+    from {
+        background-color: darkgray;
+        visibility: visible;
+    }
+
+    to {
+        background-color: limegreen;
+    }
+}

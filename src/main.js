@@ -17,6 +17,7 @@ function beginGameAnimation() {
     targetContainer.style.opacity = "0";
 
     let gameContainer = document.getElementById("gameContainer");
+    gameContainer.hidden = false;
     gameContainer.style.animation = "reveal 3s ease-in-out";
 
     setTimeout(() => {
@@ -32,6 +33,22 @@ function beginGameAnimation() {
         }, 3000);
 
     }, 3000);
+}
+
+function victoryAnimation() {
+    let gameContainer = document.getElementById("gameContainer");
+    gameContainer.style.animation = "hide 1.5s ease-in-out forwards";
+
+    let victoryDisplay = document.getElementById("victoryDisplay");
+    victoryDisplay.innerHTML = TARGET_WORD;
+    victoryDisplay.style.animation = "victory 3s ease-in-out forwards";
+    victoryDisplay.hidden = false;
+
+    setTimeout(() => {
+        let victoryVideo = document.getElementById("victoryVideo");
+        victoryVideo.hidden = false;
+        victoryVideo.play();
+    }, 3500);
 }
 
 function badSubmit() {
@@ -73,6 +90,11 @@ function constructWordDisplay(word) {
     return newBlock;
 }
 
+
+/*
+*  Control functions
+*/
+
 function submitWord() {
     let word = WORD_INPUT.value.toUpperCase();
 
@@ -81,7 +103,6 @@ function submitWord() {
         return;
     }
 
-    // check to make sure submission was a valid move
     let lastWord = STARTING_WORD;
     if (HISTORY.length > 0)
         lastWord = HISTORY[HISTORY.length - 1];
@@ -91,33 +112,41 @@ function submitWord() {
         return;
     }
 
-    let newDisplay;
-    let letterIdx;
-    if ( (letterIdx = checkForLetterChange(lastWord, word)) >= 0) {
-        newDisplay = constructWordDisplay(word);
-        let firstSegment = word.slice(0,letterIdx);
-        let secondSegment = "<span class='letterMove'>" + word[letterIdx] + "</span>";
-        let thirdSegment = word.slice(letterIdx + 1, word.length);
-
-        newDisplay.innerHTML = firstSegment + secondSegment + thirdSegment;
-    } else if (checkForAnagram(lastWord, word)) {
-        newDisplay = constructWordDisplay(word);
-        newDisplay.classList.add("anagramMove");
-    } else {
+    // Check for a valid move
+    let letterIdx = checkForLetterChange(lastWord, word);
+    if (letterIdx < 0 && !checkForAnagram(lastWord, word)) {
         badSubmit();
         return;
     }
 
-    HISTORY.push(word);
+    // Move was valid.
+    // Did we win?
+
+    if (word === TARGET_WORD) {
+        victoryAnimation();
+    } else {
+        // Add the move to the history
+        HISTORY.push(word);
+        let newDisplay = constructWordDisplay(word);
+        if (letterIdx >= 0) {
+            let firstSegment = word.slice(0, letterIdx);
+            let secondSegment = "<span class='letterMove'>" + word[letterIdx] + "</span>";
+            let thirdSegment = word.slice(letterIdx + 1, word.length);
+
+            newDisplay.innerHTML = firstSegment + secondSegment + thirdSegment;
+        } else {
+            newDisplay.classList.add("anagramMove");
+        }
 
 
-    let historyContainer = document.getElementById("historyContainer");
-    historyContainer.append(newDisplay);
+        let historyContainer = document.getElementById("historyContainer");
+        historyContainer.append(newDisplay);
 
-    setTimeout( () => {
-        newDisplay.classList.add("wordHistory")
-    });
-    revealInputAnimation();
+        setTimeout(() => {
+            newDisplay.classList.add("wordHistory")
+        });
+        revealInputAnimation();
+    }
 }
 
 function undo() {
@@ -148,7 +177,7 @@ function undo() {
         INPUT_CONTAINER.style.animation = "inputRealign 0.3s ease-out forwards";
 
         // fade out old text
-        oldInput.style.animation = "inputDisappear 0.3s forwards";
+        oldInput.style.animation = "hide 0.3s forwards";
 
         formatHistory();
     });
@@ -196,4 +225,4 @@ function startGame(startWord, targetWord) {
     beginGameAnimation();
 }
 
-startGame("GRAVE", "CRYPT");
+startGame("GRAVE", "MERGE");

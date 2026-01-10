@@ -10,7 +10,7 @@
   </head>
   <body class="h-full">
     <div class="center" style="width: 0; height: 0;">
-        <div id="gameContainer">
+        <div id="gameContainer" hidden>
 
             <!-- Contains all buttons -->
             <div id="buttonContainer">
@@ -21,7 +21,7 @@
                 <input id="wordInput" class="wordInput" value=""
                        maxlength="5" pattern="[a-zA-Z]{5}" autocomplete="off">
             </div>
-            <div id="oldInput" class="wordDisplay" style="text-align: left" hidden></div>
+            <div id="oldInput" class="wordDisplay" hidden></div>
 
             <!-- Past moves -->
             <div id="historyContainer">
@@ -34,6 +34,11 @@
             </div>
 
         </div>
+
+        <div id="victoryDisplay" class="wordDisplay" hidden></div>
+        <video id="victoryVideo" muted hidden>
+            <source src="/src/autism.mp4" type="video/mp4">
+        </video>
     </div>
   </body>
 <script src="/src/main.js" type="module"></script>

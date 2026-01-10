@@ -75,28 +75,6 @@
     }
 }
 
-@keyframes reveal {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes inputDisappear {
-    from {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    to {
-        opacity: 0;
-        visibility: hidden;
-    }
-}
-
 @keyframes NoSubmit {
     0% {
         transform: translateX(0);
