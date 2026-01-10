@@ -40,6 +40,24 @@ function beginGameAnimation() {
     }, 3000);
 }
 
+function resumeGameAnimation() {
+    let buttonContainer = document.getElementById("buttonContainer");
+    buttonContainer.hidden = false;
+    buttonContainer.style.animation = "none";
+
+    let targetContainer = document.getElementById("targetContainer");
+    targetContainer.style.opacity = "1";
+    targetContainer.style.animation = "none";
+
+    let gameContainer = document.getElementById("gameContainer");
+    gameContainer.hidden = false;
+    gameContainer.style.animation = "reveal 3s ease-in-out";
+
+    setTimeout(() => {
+        WORD_INPUT.focus();
+    }, 3000);
+}
+
 function victoryAnimation() {
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.style.animation = "hide 1.5s ease-in-out forwards";
@@ -111,6 +129,24 @@ function constructWordDisplay(word) {
     return newBlock;
 }
 
+function constructWordHistory(word, lastWord) {
+    let newDisplay = constructWordDisplay(word);
+
+    const letterIdx = checkForLetterChange(lastWord, word);
+
+    if (letterIdx >= 0) {
+        let firstSegment = word.slice(0, letterIdx);
+        let secondSegment = "<span class='letterMove'>" + word[letterIdx] + "</span>";
+        let thirdSegment = word.slice(letterIdx + 1, word.length);
+
+        newDisplay.innerHTML = firstSegment + secondSegment + thirdSegment;
+    } else {
+        newDisplay.classList.add("anagramMove");
+    }
+
+    return newDisplay;
+}
+
 
 /*
 *  Control functions
@@ -144,21 +180,17 @@ function submitWord() {
     // Did we win?
 
     if (word === TARGET_WORD) {
-        victoryAnimation();
+        // We did win!
+        endGame();
+
     } else {
         // Add the move to the history
         HISTORY.push(word);
-        let newDisplay = constructWordDisplay(word);
-        if (letterIdx >= 0) {
-            let firstSegment = word.slice(0, letterIdx);
-            let secondSegment = "<span class='letterMove'>" + word[letterIdx] + "</span>";
-            let thirdSegment = word.slice(letterIdx + 1, word.length);
 
-            newDisplay.innerHTML = firstSegment + secondSegment + thirdSegment;
-        } else {
-            newDisplay.classList.add("anagramMove");
-        }
+        sessionStorage.setItem("history", HISTORY.toString());
 
+        // Update visuals
+        let newDisplay = constructWordHistory(word, lastWord);
 
         let historyContainer = document.getElementById("historyContainer");
         historyContainer.append(newDisplay);
@@ -230,47 +262,92 @@ RESET_BUTTON.addEventListener("click", function (event) {
 
 //
 
-function startGame(startWord, targetWord) {
-    resetGame(startWord, targetWord);
+function startGame(startWord, targetWord, history=[]) {
+    resetGame(startWord, targetWord, history);
+
+    // Storage for persistent levels
+    sessionStorage.setItem("startWord", startWord);
+    sessionStorage.setItem("targetWord", targetWord);
+    sessionStorage.setItem("history", history.toString());
 
     let victoryContainer = document.getElementById("victoryContainer");
     victoryContainer.hidden = true;
 
+    // clear history display
     let historyContainer = document.getElementById("historyContainer");
     historyContainer.replaceChildren();
 
-    let startingWordContainer = document.createElement("div");
+    let startingWordContainer = constructWordDisplay(STARTING_WORD);
     startingWordContainer.id = "startingWord";
-    startingWordContainer.className = "wordDisplay smoothMovement startingWord";
-    startingWordContainer.innerHTML = STARTING_WORD;
-    startingWordContainer.style.top = "0";
+    startingWordContainer.classList.add("startingWord");
     historyContainer.append(startingWordContainer);
 
     let targetWordContainer = document.getElementById("targetWord");
     targetWordContainer.innerHTML = TARGET_WORD;
 
-    beginGameAnimation();
+    if (history.length > 0) {
+        // Resume game
+
+        let lastWord = STARTING_WORD;
+        for (const word of HISTORY) {
+            let newDisplay = constructWordHistory(word, lastWord);
+            newDisplay.classList.add("wordHistory");
+
+            historyContainer.append(newDisplay);
+            lastWord = word;
+        }
+
+        formatHistory();
+        resumeGameAnimation();
+    } else {
+        beginGameAnimation();
+    }
+
+}
+
+function endGame() {
+    // clear session storage
+    sessionStorage.removeItem("startWord");
+    sessionStorage.removeItem("targetWord");
+    sessionStorage.removeItem("history");
+
+    victoryAnimation();
 }
 
 async function onload() {
     await loadWordList();
 
-    let puzzle = PUZZLES[Math.floor(Math.random() * PUZZLES.length)];
+    // Check for session storage
+    let startWord = sessionStorage.getItem("startWord");
+    let targetWord = sessionStorage.getItem("targetWord");
+    if (startWord !== null && targetWord !== null) {
+        // There is session storage!
+        // Load previous game history and resume
+        let oldHistory = sessionStorage.getItem("history").split(",");
+        if (oldHistory[0] === "")
+            oldHistory = [];
 
-    let startWord = puzzle["start"];
-    let targetWord = puzzle["target"];
+        startGame(startWord, targetWord, oldHistory);
+    } else {
+        // Start a new game
 
-    // read words from query string if it exists
-    const urlParams = new URLSearchParams(window.location.search);
-    const queryStartWord = urlParams.get("startWord");
-    const queryTargetWord = urlParams.get("targetWord");
+        let puzzle = PUZZLES[Math.floor(Math.random() * PUZZLES.length)];
 
-    if (queryStartWord !== null && assertValidWord(queryStartWord))
-        startWord = queryStartWord;
-    if (queryTargetWord !== null && assertValidWord(queryTargetWord))
-        targetWord = queryTargetWord;
+        startWord = puzzle["start"];
+        targetWord = puzzle["target"];
 
-    startGame(startWord, targetWord);
+        // read words from query string if it exists
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryStartWord = urlParams.get("startWord");
+        const queryTargetWord = urlParams.get("targetWord");
+
+        if (queryStartWord !== null && assertValidWord(queryStartWord))
+            startWord = queryStartWord;
+        if (queryTargetWord !== null && assertValidWord(queryTargetWord))
+            targetWord = queryTargetWord;
+
+        startGame(startWord, targetWord);
+    }
 }
 
 await onload();

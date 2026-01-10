@@ -5,6 +5,6 @@
     - target word
     - number of moves
 - [ ] change puzzle each day
-- [ ] save move history on page refresh
+- [x] save move history on page refresh
 - [ ] change victory animation to show history
 - [ ] change the valid words to be actual words lol

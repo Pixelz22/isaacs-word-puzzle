@@ -7,10 +7,10 @@ let VALID_WORDS = new Set();
 let STARTING_WORD;
 let TARGET_WORD;
 
-export function resetGame(startWord, targetWord) {
+export function resetGame(startWord, targetWord, history=[]) {
     STARTING_WORD = startWord;
     TARGET_WORD = targetWord;
-    HISTORY = [];
+    HISTORY = history;
 }
 
 export function loadWordList() {
