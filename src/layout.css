@@ -1,0 +1,155 @@
+/* layout.css
+This contains the styling rules related to placing
+elements on the page.
+ */
+
+/* Margins and Padding*/
+
+.mr-4 {
+    margin-right: 1rem;
+}
+
+.ml-4 {
+    margin-left: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1rem;
+}
+
+.pv-1 {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.ph-2 {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+}
+
+.ph-3 {
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+}
+
+.margin-sides {
+    margin: 0 1em;
+}
+
+.space-x-4 > :not(:first-child) {
+    margin-left: 1rem;
+}
+
+.space-x-1 > :not(:first-child) {
+    margin-left: 0.25rem;
+}
+
+/* Width Classes */
+
+.max-w-50 {
+    max-width: 50rem;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.w-fit {
+    width: max-content;
+}
+
+.h-full {
+    height: 100%;
+}
+
+/* Flexbox Classes */
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+/* Grid Classes */
+
+.grid {
+    display: grid;
+}
+
+.grid-1c {
+    grid-template-columns: 1fr;
+}
+
+.grid-2c {
+    grid-template-columns: 1fr 1fr;
+}
+
+.grid-2c-fit {
+    grid-template-columns: max-content max-content;
+}
+
+.grid-2r-fit {
+    grid-template-rows: max-content max-content;
+}
+
+.grid-gap-4 {
+    gap: 1rem;
+}
+
+/* Alignment Classes*/
+
+.justify-content-center {
+    justify-content: center;
+}
+
+.justify-content-space {
+    justify-content: space-between;
+}
+
+.align-content-center {
+    align-content: center;
+}
+
+.place-items-center {
+    place-items: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-end {
+    align-items: end;
+}
+
+.align-self-start {
+    align-self: start;
+}
+
+.align-self-center {
+    align-self: center;
+}
+
+.justify-self-left {
+    justify-self: left;
+}
+
+.justify-self-right {
+    justify-self: right;
+}
+
+/* Float Classes */
+
+.float-right {
+    float: right;
+}

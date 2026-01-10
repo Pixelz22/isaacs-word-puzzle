@@ -1,0 +1,129 @@
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.undo-button {
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    left: -200px;
+}
+
+.wordDisplay {
+    position: absolute;
+    transform: translate(-50%, -50%);
+
+    background: darkgray;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+
+    padding: 0.5rem 1.5rem;
+    width: 208px;
+    height: 80px;
+
+    color: white;
+    font-family: monospace;
+    letter-spacing: 0.5rem;
+    font-size: 64px;
+    font-weight: bold;
+    text-transform: uppercase;
+    /*text-align: center;*/
+}
+
+.wordInput {
+    background: none;
+    border: none;
+    outline: none;
+
+    width: 110%;
+
+    margin: 0;
+    padding: 0;
+
+    color: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    letter-spacing: inherit;
+    font-size: inherit;
+    text-transform: uppercase;
+}
+
+.startingWord {
+    background-color: limegreen;
+}
+
+.anagramMove {
+    background-color: gold;
+}
+
+.letterMove {
+    color: yellow;
+}
+
+.wordHistory {
+    top: 0;
+
+    transition: top 0.3s ease-out, opacity 0.3s linear;
+}
+
+@keyframes inputRealign {
+    from {
+        top: -100px;
+    }
+
+    to {
+        top: 0;
+    }
+}
+
+@keyframes inputReappear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes inputDisappear {
+    from {
+        opacity: 1;
+        visibility: visible;
+    }
+
+     to {
+         opacity: 0;
+         visibility: hidden;
+     }
+}
+
+@keyframes NoSubmit {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(10px);
+    }
+
+    40% {
+        transform: translateX(-10px);
+    }
+
+    60% {
+        transform: translateX(10px);
+    }
+
+    80% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

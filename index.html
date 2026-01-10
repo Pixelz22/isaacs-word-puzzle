@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/src/layout.css" />
+    <link rel="stylesheet" type="text/css" href="/src/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>isaacs-word-puzzle</title>
+  </head>
+  <body class="h-full">
+    <div class="center">
+        <div>
+            <button class="undo-button" onclick="undo()">Undo</button>
+
+            <div id="inputContainer" class="wordDisplay">
+                <input id="wordInput" class="wordInput" value="" maxlength="5" pattern="[a-zA-Z]{5}">
+            </div>
+
+            <div id="oldInput" class="wordDisplay" style="text-align: left" hidden></div>
+
+            <div id="historyContainer">
+                <div id="startingWord" class="wordDisplay wordHistory startingWord"></div>
+            </div>
+        </div>
+    </div>
+  </body>
+<script src="/src/main.js" type="application/javascript"></script>
+</html>
