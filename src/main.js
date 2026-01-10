@@ -235,4 +235,4 @@ function startGame(startWord, targetWord) {
     beginGameAnimation();
 }
 
-startGame("QUITS", "QUILT");
+startGame("QUITS", "QUILL");
