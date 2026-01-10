@@ -1,6 +1,6 @@
-import { loadWordList, assertValidWord } from "./game-logic.js";
+import {loadWordList, assertValidWord, resetGame } from "./game-logic.js";
 import { checkForLetterChange, checkForAnagram } from "./game-logic.js";
-import { HISTORY, STARTING_WORD } from "./game-logic.js";
+import { HISTORY, STARTING_WORD, TARGET_WORD } from "./game-logic.js";
 
 let WORD_INPUT = document.getElementById("wordInput");
 let INPUT_CONTAINER = document.getElementById("inputContainer");
@@ -12,14 +12,24 @@ const WORD_DISPLAY_OFFSET = -100; // in px
 function beginGameAnimation() {
     let buttonContainer = document.getElementById("buttonContainer");
     buttonContainer.hidden = true;
+    let targetContainer = document.getElementById("targetContainer");
+    targetContainer.style.opacity = "0";
+
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.style.animation = "reveal 3s ease-in-out";
 
     setTimeout(() => {
-        revealInputAnimation();
+        targetContainer.hidden = false;
+        targetContainer.style.animation = "reveal 3s ease-in-out forwards";
 
-        buttonContainer.hidden = false;
-        buttonContainer.style.animation = "reveal 2s ease-in-out";
+        setTimeout( () => {
+            revealInputAnimation();
+            buttonContainer.hidden = false;
+            buttonContainer.style.animation = "reveal 2s ease-in-out";
+
+            WORD_INPUT.focus();
+        }, 3000);
+
     }, 3000);
 }
 
@@ -160,10 +170,15 @@ WORD_INPUT.addEventListener("input", function (event) {
 //
 loadWordList();
 
-function startGame(startingWord, targetWord) {
+function startGame(startWord, targetWord) {
+    resetGame(startWord, targetWord);
+
     let startingWordContainer = document.getElementById("startingWord");
     startingWordContainer.innerHTML = STARTING_WORD;
     startingWordContainer.style.top = "0";
+
+    let targetWordContainer = document.getElementById("targetWord");
+    targetWordContainer.innerHTML = TARGET_WORD;
 
     beginGameAnimation();
 }

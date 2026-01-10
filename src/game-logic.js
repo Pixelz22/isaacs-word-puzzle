@@ -4,7 +4,14 @@ let HISTORY = [];
 
 let VALID_WORDS = new Set();
 
-let STARTING_WORD = "GRAVE";
+let STARTING_WORD;
+let TARGET_WORD;
+
+export function resetGame(startWord, targetWord) {
+    STARTING_WORD = startWord;
+    TARGET_WORD = targetWord;
+    HISTORY = [];
+}
 
 export function loadWordList() {
     fetch("https://raw.githubusercontent.com/tabatkins/wordle-list/main/words").then((response) => {
@@ -51,4 +58,4 @@ export function checkForAnagram(start, move) {
     return true;
 }
 
-export { WORD_LENGTH, HISTORY, STARTING_WORD };
+export { HISTORY, STARTING_WORD, TARGET_WORD };
