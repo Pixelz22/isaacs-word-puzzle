@@ -14,3 +14,11 @@
 - [ ] create About page that explains how to play + extra info about game origins
 - [ ] create Archive page that lists all previous puzzles (also allows you to play them)
 - [ ] sidebar/menu in game that allows you to do all those things too
+
+## Phase 3: final touches
+- [ ] actually decent name for the game
+- [ ] website icon
+- [ ] embed stuff for when people share game links
+- [ ] SEO stuff for google search
+- [ ] let people share their results
+- [ ] round timer maybe?
