@@ -22,13 +22,6 @@
         font-size: 48px;
     }
 
-    .wordDisplay {
-        padding: 5px 15px;
-
-        width: 164px;
-        height: 60px;
-    }
-
     #undo-button {
         left: -125px;
     }

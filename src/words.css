@@ -9,12 +9,11 @@
     outline: none;
     border-radius: 0.25em;
 
-    padding: 0.1cap 0.25ch 0.1cap 0.5ch;
+    padding: 0.1ch 0.25ch 0.1ch 0.5ch;
     width: 6.25ch;
-    height: 2cap;
+    height: 2.25ch;
 
     color: white;
-    text-size-adjust: none;
     /*text-align: center;*/
 }
 
@@ -35,7 +34,7 @@
     border: none;
     outline: none;
 
-    width: 110%;
+    width: 110%; /* keeps the input box from adjusting once you fill it */
 
     margin: 0;
     padding: 0;
