@@ -9,9 +9,9 @@
     outline: none;
     border-radius: 0.25em;
 
-    padding: 0.1em 0.3em;
-    width: 3.25em;
-    height: 1.25em;
+    padding: 0.1cap 0.25ch 0.1cap 0.5ch;
+    width: 6.25ch;
+    height: 2cap;
 
     color: white;
     /*text-align: center;*/
@@ -19,7 +19,7 @@
 
 .gameplayText {
     font-family: monospace;
-    letter-spacing: 0.125em;
+    letter-spacing: 0.25ch;
     font-weight: bold;
     text-transform: uppercase;
 }
