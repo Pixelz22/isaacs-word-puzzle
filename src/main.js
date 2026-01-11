@@ -11,6 +11,7 @@ const RESET_BUTTON = document.getElementById("resetButton");
 const HELP_BUTTON = document.getElementById("help-button");
 const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 
+let MOBILE_MODE = false;
 let WORD_DISPLAY_OFFSET = -100; // in px
 
 /* Animation Functions */
@@ -75,6 +76,9 @@ function resumeGameAnimation() {
 function victoryAnimation() {
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.style.animation = "hide 1.5s ease-in-out forwards";
+
+    let keyboardContainer = document.getElementById("keyboardContainer");
+    keyboardContainer.style.animation = "hide 1.5s ease-in-out forwards";
 
     let victoryContainer = document.getElementById("victoryContainer");
     victoryContainer.hidden = false;
@@ -299,14 +303,52 @@ CLOSE_HELP_BUTTON.addEventListener("click", function (event) {
 });
 
 
+function onKeyboardPress(key) {
+    if (key === "ENTER") {
+        submitWord();
+        return;
+    }
+
+    if (key === "BACK") {
+        WORD_INPUT.value = WORD_INPUT.value.slice(0, WORD_INPUT.value.length - 1);
+        return;
+    }
+
+    // Letter key
+    if (WORD_INPUT.value.length < STARTING_WORD.length) {
+        WORD_INPUT.value = WORD_INPUT.value + key;
+        return;
+    }
+}
+
+function setMobileMode(on) {
+    if (on) {
+        MOBILE_MODE = true;
+        WORD_DISPLAY_OFFSET = -80;
+        WORD_INPUT.disabled = true;
+    } else {
+        MOBILE_MODE = false;
+        WORD_DISPLAY_OFFSET = -100;
+        WORD_INPUT.disabled = false;
+    }
+
+    formatHistory();
+}
+
+let keyboardButtons = document.querySelectorAll("#keyboardContainer button");
+keyboardButtons.forEach(function (button) {
+    button.addEventListener("click", function (event) {
+        onKeyboardPress(this.value);
+    })
+});
+
+
 
 function correctScreenSize() {
-    if (window.innerWidth <= 512 && WORD_DISPLAY_OFFSET !== -50) {
-        WORD_DISPLAY_OFFSET = -80
-        formatHistory();
-    } else if (WORD_DISPLAY_OFFSET !== -100) {
-        WORD_DISPLAY_OFFSET = -100
-        formatHistory();
+    if (window.innerWidth <= 512 && !MOBILE_MODE) {
+        setMobileMode(true);
+    } else if (MOBILE_MODE) {
+        setMobileMode(false);
     }
 }
 

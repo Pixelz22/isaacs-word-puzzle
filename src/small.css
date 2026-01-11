@@ -1,9 +1,10 @@
 @media (max-width: 512px) {
 
-    /* FOR TESTING so I can know when it actives*/
+    /* FOR TESTING so I can know when it actives
     body {
         background-color: rgb(255, 230, 230);
     }
+    /**/
 
     .text-xs {
         font-size: 12px;
@@ -41,6 +42,11 @@
     }
 
     #gameContainer {
+        position: absolute;
+        bottom: 50px;
+    }
+
+    #victoryContainer {
         position: absolute;
         bottom: 50px;
     }

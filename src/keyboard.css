@@ -28,4 +28,17 @@
     font-weight: bold;
 
     font-size: 32px;
+
+    cursor: pointer;
+    user-select: none;
+
+    transition: filter 0.15s;
+}
+
+.key:hover {
+    filter: brightness(1.2);
+}
+
+.key:active {
+    filter: brightness(0.8);
 }
