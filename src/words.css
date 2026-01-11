@@ -7,15 +7,15 @@
     background-color: darkgray;
     border: none;
     outline: none;
-    border-radius: 10px;
+    border-radius: 0.25em;
 
-    padding: 0.5rem 1.5rem;
-    width: 208px;
-    height: 80px;
+    padding: 0.1em 0.3em;
+    width: 3.25em;
+    height: 1.25em;
 
     color: white;
     font-family: monospace;
-    letter-spacing: 0.5rem;
+    letter-spacing: 0.125em;
     font-weight: bold;
     text-transform: uppercase;
     /*text-align: center;*/
