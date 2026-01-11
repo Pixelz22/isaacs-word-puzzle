@@ -337,8 +337,14 @@ function setMobileMode(on) {
 
 let keyboardButtons = document.querySelectorAll("#keyboardContainer button");
 keyboardButtons.forEach(function (button) {
+
     button.addEventListener("click", function (event) {
         onKeyboardPress(this.value);
+    });
+
+    // remove the focus after click is finished
+    button.addEventListener("touchend", function (event) {
+        button.blur();
     })
 });
 
