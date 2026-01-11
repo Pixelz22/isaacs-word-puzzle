@@ -30,7 +30,7 @@
                 </button>
             </div>
 
-            <div id="inputContainer" class="wordDisplay text-lg">
+            <div id="inputContainer" class="wordDisplay text-lg gameplayText">
                 <input id="wordInput" class="wordInput" value=""
                        maxlength="5" pattern="[a-zA-Z]{5}" autocomplete="off">
             </div>
@@ -43,14 +43,14 @@
 
             <div id="targetContainer" class="flex flex-col place-items-center">
                 <span class="text-sm">Target:</span>
-                <span id="targetWord" class="text-lg">CRYPT</span>
+                <span id="targetWord" class="text-lg gameplayText">CRYPT</span>
             </div>
 
         </div>
 
         <!-- Victory stuff -->
         <div id="victoryContainer">
-            <div id="victoryDisplay" class="wordDisplay text-lg" hidden></div>
+            <div id="victoryDisplay" class="wordDisplay text-lg gameplayText" hidden></div>
             <div id="victoryText" hidden>
                 You got it in <br/>
                 <span class="text-lg">
@@ -64,41 +64,41 @@
         </div>
     </div>
 
-    <div id="keyboardContainer" hidden>
+    <div id="keyboardContainer" hidden tabindex="-1">
         <div class="flex flex-col place-items-center space-y-2">
             <div class="flex place-items-center space-x-2">
-                <button class="key" value="Q">Q</button>
-                <button class="key" value="W">W</button>
-                <button class="key" value="E">E</button>
-                <button class="key" value="R">R</button>
-                <button class="key" value="T">T</button>
-                <button class="key" value="Y">Y</button>
-                <button class="key" value="U">U</button>
-                <button class="key" value="I">I</button>
-                <button class="key" value="O">O</button>
-                <button class="key" value="P">P</button>
+                <button class="key" value="Q" tabindex="-1">Q</button>
+                <button class="key" value="W" tabindex="-1">W</button>
+                <button class="key" value="E" tabindex="-1">E</button>
+                <button class="key" value="R" tabindex="-1">R</button>
+                <button class="key" value="T" tabindex="-1">T</button>
+                <button class="key" value="Y" tabindex="-1">Y</button>
+                <button class="key" value="U" tabindex="-1">U</button>
+                <button class="key" value="I" tabindex="-1">I</button>
+                <button class="key" value="O" tabindex="-1">O</button>
+                <button class="key" value="P" tabindex="-1">P</button>
             </div>
             <div class="flex place-items-center space-x-2">
-                <button class="key" value="A">A</button>
-                <button class="key" value="S">S</button>
-                <button class="key" value="D">D</button>
-                <button class="key" value="F">F</button>
-                <button class="key" value="G">G</button>
-                <button class="key" value="H">H</button>
-                <button class="key" value="J">J</button>
-                <button class="key" value="K">K</button>
-                <button class="key" value="L">L</button>
+                <button class="key" value="A" tabindex="-1">A</button>
+                <button class="key" value="S" tabindex="-1">S</button>
+                <button class="key" value="D" tabindex="-1">D</button>
+                <button class="key" value="F" tabindex="-1">F</button>
+                <button class="key" value="G" tabindex="-1">G</button>
+                <button class="key" value="H" tabindex="-1">H</button>
+                <button class="key" value="J" tabindex="-1">J</button>
+                <button class="key" value="K" tabindex="-1">K</button>
+                <button class="key" value="L" tabindex="-1">L</button>
             </div>
             <div class="flex place-items-center space-x-2">
-                <button class="key text-xs" value="ENTER">ENTER</button>
-                <button class="key" value="Z">Z</button>
-                <button class="key" value="X">X</button>
-                <button class="key" value="C">C</button>
-                <button class="key" value="V">V</button>
-                <button class="key" value="B">B</button>
-                <button class="key" value="N">N</button>
-                <button class="key" value="M">M</button>
-                <button class="key" value="BACK">
+                <button class="key text-xs" value="ENTER" tabindex="-1">ENTER</button>
+                <button class="key" value="Z" tabindex="-1">Z</button>
+                <button class="key" value="X" tabindex="-1">X</button>
+                <button class="key" value="C" tabindex="-1">C</button>
+                <button class="key" value="V" tabindex="-1">V</button>
+                <button class="key" value="B" tabindex="-1">B</button>
+                <button class="key" value="N" tabindex="-1">N</button>
+                <button class="key" value="M" tabindex="-1">M</button>
+                <button class="key" value="BACK" tabindex="-1">
                     <ion-icon name="backspace-outline" class="h-full"></ion-icon>
                 </button>
             </div>
@@ -107,7 +107,7 @@
 
     <!-- Credits -->
     <div class="credits flex flex-col place-items-center text-xs">
-        <span>Game by Isaac Kneubuhl</span>
+        <span>Puzzles by Isaac Kneubuhl</span>
         <span>Website by Tyler Johnson</span>
     </div>
 

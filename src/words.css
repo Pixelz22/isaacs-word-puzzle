@@ -14,11 +14,14 @@
     height: 1.25em;
 
     color: white;
+    /*text-align: center;*/
+}
+
+.gameplayText {
     font-family: monospace;
     letter-spacing: 0.125em;
     font-weight: bold;
     text-transform: uppercase;
-    /*text-align: center;*/
 }
 
 .smoothMovement {

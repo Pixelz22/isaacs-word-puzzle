@@ -158,7 +158,7 @@ function hideHelpText() {
 
 function constructWordDisplay(word) {
     let newBlock = document.createElement("div");
-    newBlock.className = "wordDisplay text-lg smoothMovement";
+    newBlock.className = "wordDisplay text-lg gameplayText smoothMovement";
     newBlock.innerHTML = word;
     newBlock.style.top = "0";
 
@@ -168,6 +168,9 @@ function constructWordDisplay(word) {
 function constructWordHistory(word, lastWord) {
     let newDisplay = constructWordDisplay(word);
 
+    // We're ignoring all this for now
+    // Hopefully we find a better way of indicating moves later
+    /*
     const letterIdx = checkForLetterChange(lastWord, word);
 
     if (letterIdx >= 0) {
@@ -179,6 +182,7 @@ function constructWordHistory(word, lastWord) {
     } else {
         newDisplay.classList.add("anagramMove");
     }
+    /* */
 
     return newDisplay;
 }
@@ -240,7 +244,8 @@ function submitWord() {
 
 function undo() {
     if (HISTORY.length <= 0) {
-        // make an error or smth
+        // Just clear the input
+        WORD_INPUT.value = "";
         return;
     }
 
@@ -274,10 +279,15 @@ function undo() {
     WORD_INPUT.focus();
 }
 
-WORD_INPUT.addEventListener("keypress", function (event) {
+WORD_INPUT.addEventListener("keydown", function (event) {
+    if (event.repeat) return;
+
     if (event.key === "Enter") {
         event.preventDefault();
         submitWord();
+    } else if (event.key === "Escape" || event.key === "Tab") {
+        event.preventDefault();
+        undo();
     }
 });
 
