@@ -39,6 +39,13 @@
     filter: brightness(1.1);
 }
 
+/* Hover effect should only apply on things with pointers*/
+@media (pointer: none), (pointer: coarse) {
+    .key:hover {
+        filter: unset;
+    }
+}
+
 .key:active {
     filter: brightness(0.9);
 }

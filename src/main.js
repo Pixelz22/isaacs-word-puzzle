@@ -341,11 +341,6 @@ keyboardButtons.forEach(function (button) {
     button.addEventListener("click", function (event) {
         onKeyboardPress(this.value);
     });
-
-    // remove the focus after click is finished
-    button.addEventListener("touchend", function (event) {
-        button.blur();
-    })
 });
 
 
@@ -353,7 +348,7 @@ keyboardButtons.forEach(function (button) {
 function correctScreenSize() {
     if (window.innerWidth <= 512 && !MOBILE_MODE) {
         setMobileMode(true);
-    } else if (MOBILE_MODE) {
+    } else if (window.innerWidth > 512 && MOBILE_MODE) {
         setMobileMode(false);
     }
 }

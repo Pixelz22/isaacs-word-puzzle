@@ -41,16 +41,6 @@
         top: 50px;
     }
 
-    #gameContainer {
-        position: absolute;
-        bottom: 50px;
-    }
-
-    #victoryContainer {
-        position: absolute;
-        bottom: 50px;
-    }
-
     .credits {
         box-sizing: border-box;
         top: 0;
