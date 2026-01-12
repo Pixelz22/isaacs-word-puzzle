@@ -2,6 +2,8 @@ import {loadWordList, assertValidWord, resetGame } from "./game-logic.js";
 import { checkForLetterChange, checkForAnagram } from "./game-logic.js";
 import { HISTORY, STARTING_WORD, TARGET_WORD } from "./game-logic.js";
 
+import { loadAudioFile, playSound } from "./audio.js";
+
 import PUZZLES from "./puzzles.json" with { type: "json" }
 
 const WORD_INPUT = document.getElementById("wordInput");
@@ -13,23 +15,6 @@ const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 
 let MOBILE_MODE = null;
 let WORD_DISPLAY_OFFSET = -100; // in px
-
-const KEYTAP_1 = new Audio("./src/audio/keytap1.mp3");
-const KEYTAP_1_FAIL = new Audio("./src/audio/keytap1-fail.mp3");
-
-const KEYTAP_2 = new Audio("./src/audio/keytap2.mp3");
-const KEYTAP_2_FAIL = new Audio("./src/audio/keytap2-fail.mp3");
-
-const GOOD_SUBMIT = new Audio("./src/audio/newWord.mp3");
-const BAD_SUBMIT = new Audio("./src/audio/badSubmit.mp3");
-
-const VICTORY_PIANO = new Audio("./src/audio/victory.mp3");
-const VICTORY_PATHETIC = new Audio("./src/audio/party-favor.mp3");
-
-// supposedly this fixes audio issues just by creating it
-// HTML Javascript black magic ¯\_(ツ)_/¯
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
 
 /* Animation Functions */
 
@@ -118,8 +103,7 @@ function victoryAnimation() {
     victoryVideo.hidden = true;
 
     //sfx
-    VICTORY_PIANO.currentTime = 0;
-    VICTORY_PIANO.play();
+    playSound("victoryPiano");
 
     setTimeout( () => {
         if (CANCEL_VICTORY_ANIMATION) {
@@ -137,7 +121,6 @@ function victoryAnimation() {
             return;
         }
 
-        victoryVideo.currentTime = 0;
         victoryVideo.hidden = false;
         victoryVideo.play();
 
@@ -147,15 +130,13 @@ function victoryAnimation() {
                 return;
             }
 
-            VICTORY_PATHETIC.currentTime = 0;
-            VICTORY_PATHETIC.play();
+            playSound("victoryPathetic");
         }, 200);
     }, 12500);
 }
 
 function badSubmit() {
-    BAD_SUBMIT.currentTime = 0;
-    BAD_SUBMIT.play();
+    playSound("submit-fail");
 
     INPUT_CONTAINER.style.animation = "none";
     setTimeout(() => {
@@ -277,8 +258,7 @@ function submitWord() {
         sessionStorage.setItem("history", HISTORY.toString());
 
 
-        GOOD_SUBMIT.currentTime = 0;
-        GOOD_SUBMIT.play();
+        playSound("submit");
 
         // Update visuals
         let newDisplay = constructWordHistory(word, lastWord);
@@ -375,11 +355,9 @@ function onKeyboardPress(key) {
 
         if (WORD_INPUT.value.length > 0) {
             WORD_INPUT.value = WORD_INPUT.value.slice(0, WORD_INPUT.value.length - 1);
-            KEYTAP_2.currentTime = 0;
-            KEYTAP_2.play();
+            playSound("keytap2");
         } else {
-            KEYTAP_2_FAIL.currentTime = 0;
-            KEYTAP_2_FAIL.play();
+            playSound("keytap2-fail");
         }
 
         return;
@@ -389,12 +367,9 @@ function onKeyboardPress(key) {
     if (WORD_INPUT.value.length < STARTING_WORD.length) {
         WORD_INPUT.value = WORD_INPUT.value + key;
 
-        KEYTAP_1.currentTime = 0;
-        KEYTAP_1.play();
-        return;
+        playSound("keytap1");
     } else {
-        KEYTAP_1_FAIL.currentTime = 0;
-        KEYTAP_1_FAIL.play();
+        playSound("keytap1-fail");
     }
 }
 
@@ -458,6 +433,9 @@ function startGame(startWord, targetWord, history=[]) {
     startingWordContainer.classList.add("startingWord");
     historyContainer.append(startingWordContainer);
 
+    let victoryVideo = document.getElementById("victoryVideo");
+    victoryVideo.currentTime = 0;
+
     let targetWordContainer = document.getElementById("targetWord");
     targetWordContainer.innerHTML = TARGET_WORD;
 
@@ -492,6 +470,15 @@ function endGame() {
 
 async function onload() {
     await loadWordList();
+
+    await loadAudioFile("./src/audio/keytap1.mp3", "keytap1");
+    await loadAudioFile("./src/audio/keytap1-fail.mp3", "keytap1-fail");
+    await loadAudioFile("./src/audio/keytap2.mp3", "keytap2");
+    await loadAudioFile("./src/audio/keytap2-fail.mp3", "keytap2-fail");
+    await loadAudioFile("./src/audio/newWord.mp3", "submit");
+    await loadAudioFile("./src/audio/badSubmit.mp3", "submit-fail");
+    await loadAudioFile("./src/audio/victory.mp3", "victoryPiano");
+    await loadAudioFile("./src/audio/party-favor.mp3", "victoryPathetic");
 
     correctScreenSize();
 
