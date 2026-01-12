@@ -282,6 +282,7 @@ function undo() {
     }
 
     let lastWord = HISTORY.pop();
+    sessionStorage.setItem("history", HISTORY.toString());
 
     // Create illusion of old input fading away
     let oldInput = document.getElementById("oldInput");
