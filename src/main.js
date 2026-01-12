@@ -430,6 +430,9 @@ function startGame(startWord, targetWord, history=[]) {
     sessionStorage.setItem("targetWord", targetWord);
     sessionStorage.setItem("history", history.toString());
 
+    WORD_INPUT.value = "";
+    updateCaret();
+
     let victoryContainer = document.getElementById("victoryContainer");
     victoryContainer.hidden = true;
 
