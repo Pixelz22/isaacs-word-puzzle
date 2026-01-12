@@ -14,6 +14,18 @@ const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 let MOBILE_MODE = false;
 let WORD_DISPLAY_OFFSET = -100; // in px
 
+const KEYTAP_1 = new Audio("./src/audio/keytap1.mp3");
+const KEYTAP_1_FAIL = new Audio("./src/audio/keytap1-fail.mp3");
+
+const KEYTAP_2 = new Audio("./src/audio/keytap2.mp3");
+const KEYTAP_2_FAIL = new Audio("./src/audio/keytap2-fail.mp3");
+
+const GOOD_SUBMIT = new Audio("./src/audio/newWord.mp3");
+const BAD_SUBMIT = new Audio("./src/audio/badSubmit.mp3");
+
+const VICTORY_PIANO = new Audio("./src/audio/victory.mp3");
+const VICTORY_PATHETIC = new Audio("./src/audio/party-favor.mp3");
+
 /* Animation Functions */
 
 function beginGameAnimation() {
@@ -75,17 +87,17 @@ function resumeGameAnimation() {
 
 function victoryAnimation() {
     let gameContainer = document.getElementById("gameContainer");
-    gameContainer.style.animation = "hide 1.5s ease-in-out forwards";
+    gameContainer.style.animation = "hide 2s ease-in-out forwards";
 
     let keyboardContainer = document.getElementById("keyboardContainer");
-    keyboardContainer.style.animation = "hide 1.5s ease-in-out forwards";
+    keyboardContainer.style.animation = "hide 2s ease-in-out forwards";
 
     let victoryContainer = document.getElementById("victoryContainer");
     victoryContainer.hidden = false;
 
     let victoryDisplay = document.getElementById("victoryDisplay");
     victoryDisplay.innerHTML = TARGET_WORD;
-    victoryDisplay.style.animation = "victory 3s ease-in-out forwards";
+    victoryDisplay.style.animation = "victory 3s ease-in-out 2s forwards";
     victoryDisplay.hidden = false;
 
     let victoryText = document.getElementById("victoryText");
@@ -97,18 +109,30 @@ function victoryAnimation() {
     let victoryVideo = document.getElementById("victoryVideo");
     victoryVideo.hidden = true;
 
+    //sfx
+    VICTORY_PIANO.currentTime = 0;
+    VICTORY_PIANO.play();
+
     setTimeout( () => {
         victoryText.hidden = false;
-        victoryText.style.animation = "reveal 2s ease-in-out forwards";
-    }, 1500)
+        victoryText.style.animation = "reveal 3s ease-in-out forwards";
+    }, 5000)
 
     setTimeout(() => {
         victoryVideo.hidden = false;
         victoryVideo.play();
-    }, 4000);
+
+        setTimeout( () => {
+            VICTORY_PATHETIC.currentTime = 0;
+            VICTORY_PATHETIC.play();
+        }, 200);
+    }, 12500);
 }
 
 function badSubmit() {
+    BAD_SUBMIT.currentTime = 0;
+    BAD_SUBMIT.play();
+
     INPUT_CONTAINER.style.animation = "none";
     setTimeout(() => {
         INPUT_CONTAINER.style.animationComposition = "accumulate";
@@ -226,8 +250,11 @@ function submitWord() {
     } else {
         // Add the move to the history
         HISTORY.push(word);
-
         sessionStorage.setItem("history", HISTORY.toString());
+
+
+        GOOD_SUBMIT.currentTime = 0;
+        GOOD_SUBMIT.play();
 
         // Update visuals
         let newDisplay = constructWordHistory(word, lastWord);
@@ -320,21 +347,36 @@ function onKeyboardPress(key) {
     }
 
     if (key === "BACK") {
-        WORD_INPUT.value = WORD_INPUT.value.slice(0, WORD_INPUT.value.length - 1);
+
+        if (WORD_INPUT.value.length > 0) {
+            WORD_INPUT.value = WORD_INPUT.value.slice(0, WORD_INPUT.value.length - 1);
+            KEYTAP_2.currentTime = 0;
+            KEYTAP_2.play();
+        } else {
+            KEYTAP_2_FAIL.currentTime = 0;
+            KEYTAP_2_FAIL.play();
+        }
+
         return;
     }
 
     // Letter key
     if (WORD_INPUT.value.length < STARTING_WORD.length) {
         WORD_INPUT.value = WORD_INPUT.value + key;
+
+        KEYTAP_1.currentTime = 0;
+        KEYTAP_1.play();
         return;
+    } else {
+        KEYTAP_1_FAIL.currentTime = 0;
+        KEYTAP_1_FAIL.play();
     }
 }
 
 function setMobileMode(on) {
     if (on) {
         MOBILE_MODE = true;
-        WORD_DISPLAY_OFFSET = -80;
+        WORD_DISPLAY_OFFSET = -70;
         WORD_INPUT.disabled = true;
     } else {
         MOBILE_MODE = false;
