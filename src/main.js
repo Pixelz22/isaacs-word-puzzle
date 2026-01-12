@@ -11,7 +11,7 @@ const RESET_BUTTON = document.getElementById("resetButton");
 const HELP_BUTTON = document.getElementById("help-button");
 const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 
-let MOBILE_MODE = false;
+let MOBILE_MODE = null;
 let WORD_DISPLAY_OFFSET = -100; // in px
 
 const KEYTAP_1 = new Audio("./src/audio/keytap1.mp3");
@@ -85,7 +85,10 @@ function resumeGameAnimation() {
     }, 3000);
 }
 
+let CANCEL_VICTORY_ANIMATION = false
 function victoryAnimation() {
+    CANCEL_VICTORY_ANIMATION = false;
+
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.style.animation = "hide 2s ease-in-out forwards";
 
@@ -114,15 +117,31 @@ function victoryAnimation() {
     VICTORY_PIANO.play();
 
     setTimeout( () => {
+        if (CANCEL_VICTORY_ANIMATION) {
+            CANCEL_VICTORY_ANIMATION = false;
+            return;
+        }
+
         victoryText.hidden = false;
         victoryText.style.animation = "reveal 3s ease-in-out forwards";
     }, 5000)
 
     setTimeout(() => {
+        if (CANCEL_VICTORY_ANIMATION) {
+            CANCEL_VICTORY_ANIMATION = false;
+            return;
+        }
+
+        victoryVideo.currentTime = 0;
         victoryVideo.hidden = false;
         victoryVideo.play();
 
         setTimeout( () => {
+            if (CANCEL_VICTORY_ANIMATION) {
+                CANCEL_VICTORY_ANIMATION = false;
+                return;
+            }
+
             VICTORY_PATHETIC.currentTime = 0;
             VICTORY_PATHETIC.play();
         }, 200);
@@ -328,6 +347,7 @@ UNDO_BUTTON.addEventListener("click", function (event) {
 });
 
 RESET_BUTTON.addEventListener("click", function (event) {
+    CANCEL_VICTORY_ANIMATION = true;
     startGame(STARTING_WORD, TARGET_WORD);
 });
 
@@ -380,7 +400,7 @@ function setMobileMode(on) {
         WORD_INPUT.disabled = true;
     } else {
         MOBILE_MODE = false;
-        WORD_DISPLAY_OFFSET = -100;
+        WORD_DISPLAY_OFFSET = -90;
         WORD_INPUT.disabled = false;
     }
 
@@ -400,7 +420,7 @@ keyboardButtons.forEach(function (button) {
 function correctScreenSize() {
     if (window.innerWidth <= 512 && !MOBILE_MODE) {
         setMobileMode(true);
-    } else if (window.innerWidth > 512 && MOBILE_MODE) {
+    } else if (window.innerWidth > 512 && (MOBILE_MODE || MOBILE_MODE === null)) {
         setMobileMode(false);
     }
 }
