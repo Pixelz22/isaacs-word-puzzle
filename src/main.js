@@ -26,6 +26,11 @@ const BAD_SUBMIT = new Audio("./src/audio/badSubmit.mp3");
 const VICTORY_PIANO = new Audio("./src/audio/victory.mp3");
 const VICTORY_PATHETIC = new Audio("./src/audio/party-favor.mp3");
 
+// supposedly this fixes audio issues just by creating it
+// HTML Javascript black magic ¯\_(ツ)_/¯
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
 /* Animation Functions */
 
 function beginGameAnimation() {
