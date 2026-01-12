@@ -14,7 +14,7 @@ const HELP_BUTTON = document.getElementById("help-button");
 const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
 
 let MOBILE_MODE = null;
-let WORD_DISPLAY_OFFSET = -100; // in px
+let WORD_DISPLAY_OFFSET = -2.25; // in cap
 
 /* Animation Functions */
 
@@ -152,13 +152,14 @@ function formatHistory() {
     let historyList = historyContainer.children;
     let counter = historyList.length;
     for (let child of historyList) {
-        child.style.top = (WORD_DISPLAY_OFFSET * counter) + "px";
+        child.style.top = (WORD_DISPLAY_OFFSET * counter) + "cap";
         counter--;
     }
 }
 
 function revealInputAnimation() {
     INPUT_CONTAINER.style.animation = "none";
+    INPUT_CONTAINER.style.animationComposition = "";
     WORD_INPUT.value = "";
 
     setTimeout(() => {
@@ -288,8 +289,8 @@ function undo() {
     oldInput.style.animation = "none";
     oldInput.hidden = false;
 
-    INPUT_CONTAINER.style.animation = "none";
-    INPUT_CONTAINER.style.top = WORD_DISPLAY_OFFSET + "px"; // add the class so it moves immediately
+    INPUT_CONTAINER.style.transition = "none";
+    INPUT_CONTAINER.style.top = WORD_DISPLAY_OFFSET + "cap"; // add the class so it moves immediately
     WORD_INPUT.value = lastWord;
 
     let historyContainer = document.getElementById("historyContainer");
@@ -298,13 +299,17 @@ function undo() {
 
     setTimeout(() => {
         // remove the class and begin the down animation
+        INPUT_CONTAINER.style.transition = "top 0.3s ease-out";
         INPUT_CONTAINER.style.top = "0";
-        INPUT_CONTAINER.style.animation = "inputRealign 0.3s ease-out forwards";
 
         // fade out old text
         oldInput.style.animation = "hide 0.3s forwards";
 
         formatHistory();
+
+        setTimeout(() => {
+            INPUT_CONTAINER.style.transition = "";
+        }, 300);
     });
 
     WORD_INPUT.focus();
@@ -376,11 +381,11 @@ function onKeyboardPress(key) {
 function setMobileMode(on) {
     if (on) {
         MOBILE_MODE = true;
-        WORD_DISPLAY_OFFSET = -70;
+        WORD_DISPLAY_OFFSET = -2.25;
         WORD_INPUT.disabled = true;
     } else {
         MOBILE_MODE = false;
-        WORD_DISPLAY_OFFSET = -90;
+        WORD_DISPLAY_OFFSET = -2.25;
         WORD_INPUT.disabled = false;
     }
 

@@ -9,10 +9,10 @@
     outline: none;
     border-radius: 0.25em;
 
-    padding: 0.5ch 0.25ch 0.5cap 0.5ch;
+    padding: 0ch 0.25ch 0 0.5ch;
     width: 6.25ch;
-    height: 1cap;
-    line-height: 1cap;
+    height: 2cap;
+    line-height: 2cap;
 
     color: white;
     /*text-align: center;*/
@@ -35,7 +35,9 @@
     border: none;
     outline: none;
 
-    width: 110%; /* keeps the input box from adjusting once you fill it */
+    height: 100%;
+    width: 100%; /* keeps the input box from adjusting once you fill it */
+    overflow: hidden;
 
     margin: 0;
     padding: 0;
@@ -44,6 +46,7 @@
     font-family: inherit;
     font-weight: inherit;
     letter-spacing: inherit;
+    line-height: inherit;
     font-size: inherit;
     text-transform: uppercase;
 }
@@ -53,7 +56,6 @@
 }
 
 .wordHistory {
-    top: 0;
     opacity: 60%;
 }
 
@@ -67,16 +69,6 @@
 
 
 /* Animations */
-
-@keyframes inputRealign {
-    from {
-        top: -100px;
-    }
-
-    to {
-        top: 0;
-    }
-}
 
 @keyframes NoSubmit {
     0% {
