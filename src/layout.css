@@ -161,3 +161,9 @@ elements on the page.
 .float-right {
     float: right;
 }
+
+/* Positioning classes */
+
+.anchor {
+    position: relative;
+}

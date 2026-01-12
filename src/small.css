@@ -1,3 +1,7 @@
+.mobile-only {
+    visibility: hidden;
+}
+
 @media (max-width: 512px) {
 
     /* FOR TESTING so I can know when it actives
@@ -5,6 +9,10 @@
         background-color: rgb(255, 230, 230);
     }
     /**/
+
+    .mobile-only {
+        visibility: visible;
+    }
 
     .text-xs {
         font-size: 12px;

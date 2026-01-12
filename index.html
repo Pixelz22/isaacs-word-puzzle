@@ -33,8 +33,11 @@
 
             <div id="oldInput" class="wordDisplay text-lg gameplayText" hidden></div>
             <div id="inputContainer" class="wordDisplay text-lg gameplayText">
-                <input id="wordInput" class="wordInput" value=""
-                       maxlength="5" pattern="[a-zA-Z]{5}" autocomplete="off">
+                <div class="anchor">
+                    <input id="wordInput" class="wordInput" value=""
+                           maxlength="5" pattern="[a-zA-Z]{5}" autocomplete="off">
+                    <div id="caret" class="caret mobile-only"></div>
+                </div>
             </div>
 
             <!-- Past moves -->

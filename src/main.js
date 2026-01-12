@@ -12,9 +12,10 @@ const UNDO_BUTTON = document.getElementById("undo-button");
 const RESET_BUTTON = document.getElementById("resetButton");
 const HELP_BUTTON = document.getElementById("help-button");
 const CLOSE_HELP_BUTTON = document.getElementById("closeHelp");
+const FAKE_CARET = document.getElementById("caret");
 
 let MOBILE_MODE = null;
-let WORD_DISPLAY_OFFSET = -2.25; // in cap
+const WORD_DISPLAY_OFFSET = -2.25; // in cap
 
 /* Animation Functions */
 
@@ -350,14 +351,16 @@ CLOSE_HELP_BUTTON.addEventListener("click", function (event) {
     hideHelpText();
 });
 
+function updateCaret() {
+    FAKE_CARET.style.left = (1.25 * WORD_INPUT.value.length) + "ch";
+}
 
 function onKeyboardPress(key) {
     if (key === "ENTER") {
         submitWord();
-        return;
     }
 
-    if (key === "BACK") {
+    else if (key === "BACK") {
 
         if (WORD_INPUT.value.length > 0) {
             WORD_INPUT.value = WORD_INPUT.value.slice(0, WORD_INPUT.value.length - 1);
@@ -365,28 +368,28 @@ function onKeyboardPress(key) {
         } else {
             playSound("keytap2-fail");
         }
-
-        return;
     }
 
     // Letter key
-    if (WORD_INPUT.value.length < STARTING_WORD.length) {
+    else if (WORD_INPUT.value.length < STARTING_WORD.length) {
         WORD_INPUT.value = WORD_INPUT.value + key;
 
         playSound("keytap1");
     } else {
         playSound("keytap1-fail");
     }
+
+    // update fake caret
+    updateCaret();
 }
 
 function setMobileMode(on) {
     if (on) {
         MOBILE_MODE = true;
-        WORD_DISPLAY_OFFSET = -2.25;
         WORD_INPUT.disabled = true;
+        updateCaret();
     } else {
         MOBILE_MODE = false;
-        WORD_DISPLAY_OFFSET = -2.25;
         WORD_INPUT.disabled = false;
     }
 
