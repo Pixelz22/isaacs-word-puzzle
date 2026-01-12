@@ -9,9 +9,10 @@
     outline: none;
     border-radius: 0.25em;
 
-    padding: 0.0ch 0.25ch 0.5ex 0.5ch;
+    padding: 0.5ch 0.25ch 0.5cap 0.5ch;
     width: 6.25ch;
-    height: 2ex;
+    height: 1cap;
+    line-height: 1cap;
 
     color: white;
     /*text-align: center;*/
