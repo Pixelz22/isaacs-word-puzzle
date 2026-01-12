@@ -223,6 +223,9 @@ function constructWordHistory(word, lastWord) {
 *  Control functions
 */
 
+const SUBMIT_SOUNDS = ["submit-1", "submit-2", "submit-3", "submit-4"];
+let remainingSounds = [...SUBMIT_SOUNDS];
+
 function submitWord() {
     let word = WORD_INPUT.value.toUpperCase();
 
@@ -259,8 +262,13 @@ function submitWord() {
         HISTORY.push(word);
         sessionStorage.setItem("history", HISTORY.toString());
 
-
-        playSound("submit");
+        // Play submit noise
+        const num = Math.floor(Math.random() * remainingSounds.length);
+        const sound = remainingSounds[num];
+        if (remainingSounds.length === 1)
+            remainingSounds = [...SUBMIT_SOUNDS];
+        else remainingSounds.splice(num, 1);
+        playSound(sound);
 
         // Update visuals
         let newDisplay = constructWordHistory(word, lastWord);
@@ -488,6 +496,10 @@ async function onload() {
     await loadAudioFile("./src/audio/keytap2.mp3", "keytap2");
     await loadAudioFile("./src/audio/keytap2-fail.mp3", "keytap2-fail");
     await loadAudioFile("./src/audio/newWord.mp3", "submit");
+    await loadAudioFile("./src/audio/submit-1.mp3", "submit-1");
+    await loadAudioFile("./src/audio/submit-2.mp3", "submit-2");
+    await loadAudioFile("./src/audio/submit-3.mp3", "submit-3");
+    await loadAudioFile("./src/audio/submit-4.mp3", "submit-4");
     await loadAudioFile("./src/audio/badSubmit.mp3", "submit-fail");
     await loadAudioFile("./src/audio/victory.mp3", "victoryPiano");
     await loadAudioFile("./src/audio/party-favor.mp3", "victoryPathetic");
