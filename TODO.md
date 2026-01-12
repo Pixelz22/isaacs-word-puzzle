@@ -2,7 +2,7 @@
 
 ## Phase 1: single puzzle
 - [ ] change victory animation to show history
-- [ ] add sfx
+- [x] add sfx
 - [ ] change the valid words to be actual words lol
 
 ## Phase 2: archives
