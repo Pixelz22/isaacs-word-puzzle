@@ -268,7 +268,7 @@ function submitWord() {
         if (remainingSounds.length === 1)
             remainingSounds = [...SUBMIT_SOUNDS];
         else remainingSounds.splice(num, 1);
-        playSound(sound);
+        playSound("submit-1");
 
         // Update visuals
         let newDisplay = constructWordHistory(word, lastWord);
@@ -284,6 +284,8 @@ function submitWord() {
 }
 
 function undo() {
+    playSound("undo");
+
     if (HISTORY.length <= 0) {
         // Just clear the input
         WORD_INPUT.value = "";
@@ -503,6 +505,7 @@ async function onload() {
     await loadAudioFile("./src/audio/badSubmit.mp3", "submit-fail");
     await loadAudioFile("./src/audio/victory.mp3", "victoryPiano");
     await loadAudioFile("./src/audio/party-favor.mp3", "victoryPathetic");
+    await loadAudioFile("./src/audio/slide.mp3", "undo");
 
     correctScreenSize();
 
