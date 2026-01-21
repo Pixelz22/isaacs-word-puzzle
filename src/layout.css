@@ -124,6 +124,10 @@ elements on the page.
     justify-content: space-between;
 }
 
+.justify-content-end {
+    justify-content: flex-end;
+}
+
 .align-content-center {
     align-content: center;
 }

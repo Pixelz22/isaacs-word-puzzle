@@ -100,6 +100,14 @@ body {
     font-size: 32px;
 }
 
+#victoryFlex {
+    position: absolute;
+    transform: translate(-50%, 0);
+    bottom: -1cap;
+
+    gap: 0.25cap;
+}
+
 #moveCounter {
     font-weight: bold;
 }
@@ -128,8 +136,6 @@ body {
 
     height: 300px;
 }
-
-
 
 @keyframes reveal {
     from {

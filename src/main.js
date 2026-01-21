@@ -23,13 +23,19 @@ function beginGameAnimation() {
     let buttonContainer = document.getElementById("buttonContainer");
     buttonContainer.hidden = true;
     buttonContainer.style.animation = "none";
+
     let targetContainer = document.getElementById("targetContainer");
     targetContainer.style.opacity = "0";
     targetContainer.style.animation = "none";
 
     let gameContainer = document.getElementById("gameContainer");
     gameContainer.hidden = false;
-    gameContainer.style.animation = "reveal 3s ease-in-out";
+
+    INPUT_CONTAINER.hidden = true;
+
+    let historyContainer = document.getElementById("historyContainer");
+    historyContainer.hidden = false;
+    historyContainer.style.animation = "reveal 3s ease-in-out";
 
     let keyboardContainer = document.getElementById("keyboardContainer");
     keyboardContainer.hidden = true;
@@ -89,16 +95,37 @@ function victoryAnimation() {
     let victoryContainer = document.getElementById("victoryContainer");
     victoryContainer.hidden = false;
 
-    let victoryDisplay = document.getElementById("victoryDisplay");
-    victoryDisplay.innerHTML = TARGET_WORD;
-    victoryDisplay.style.animation = "victory 3s ease-in-out 2s forwards";
-    victoryDisplay.hidden = false;
+    // Fill out history display
+    let historyContainer = document.getElementById("historyContainer");
+    historyContainer.hidden = true;
+
+    // update positions
+    let victoryFlex = document.getElementById("victoryFlex");
+    victoryFlex.replaceChildren();
+
+    let firstBlock = constructWordDisplay(STARTING_WORD);
+    firstBlock.classList.add("static", "startingWord");
+    firstBlock.style.top = "";
+    victoryFlex.append(firstBlock);
+
+    for (const word of HISTORY) {
+        let newBlock = constructWordDisplay(word);
+        newBlock.classList.add("wordHistory");
+        newBlock.classList.add("static");
+        newBlock.style.top = "";
+
+        victoryFlex.append(newBlock);
+    }
+
+    let finalWord = victoryFlex.children[victoryFlex.children.length - 1];
+    finalWord.classList.remove("wordHistory");
+    finalWord.style.animation = "victory 3s ease-in-out 2s forwards";
 
     let victoryText = document.getElementById("victoryText");
     victoryText.hidden = true;
 
     let moveCounter = document.getElementById("moveCounter");
-    moveCounter.innerHTML = (HISTORY.length + 1).toString();
+    moveCounter.innerHTML = (HISTORY.length).toString();
 
     let victoryVideo = document.getElementById("victoryVideo");
     victoryVideo.hidden = true;
@@ -159,6 +186,7 @@ function formatHistory() {
 }
 
 function revealInputAnimation() {
+    INPUT_CONTAINER.hidden = false;
     INPUT_CONTAINER.style.animation = "none";
     INPUT_CONTAINER.style.animationComposition = "";
     WORD_INPUT.value = "";
@@ -251,17 +279,17 @@ function submitWord() {
     }
 
     // Move was valid.
-    // Did we win?
 
+    // Add the move to the history
+    HISTORY.push(word);
+    sessionStorage.setItem("history", HISTORY.toString());
+
+    // Did we win?
     if (word === TARGET_WORD) {
         // We did win!
         endGame();
 
     } else {
-        // Add the move to the history
-        HISTORY.push(word);
-        sessionStorage.setItem("history", HISTORY.toString());
-
         // Play submit noise
         const num = Math.floor(Math.random() * remainingSounds.length);
         const sound = remainingSounds[num];

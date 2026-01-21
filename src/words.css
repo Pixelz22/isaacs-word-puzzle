@@ -18,6 +18,11 @@
     /*text-align: center;*/
 }
 
+.static {
+    position: relative;
+    transform: unset;
+}
+
 .gameplayText {
     font-family: monospace;
     letter-spacing: 0.25ch;

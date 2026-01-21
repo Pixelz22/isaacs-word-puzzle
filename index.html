@@ -18,6 +18,7 @@
   </head>
   <body>
     <div class="center" style="width: 0; height: 0;">
+        <!-- Contains all interactables -->
         <div id="gameContainer" hidden>
 
             <!-- Contains all buttons -->
@@ -40,11 +41,6 @@
                 </div>
             </div>
 
-            <!-- Past moves -->
-            <div id="historyContainer">
-                <div id="startingWord" class="wordDisplay smoothMovement startingWord"></div>
-            </div>
-
             <div id="targetContainer" class="flex flex-col place-items-center">
                 <span class="text-sm">Target:</span>
                 <span id="targetWord" class="text-lg gameplayText">CRYPT</span>
@@ -52,9 +48,17 @@
 
         </div>
 
+
+        <!-- Past moves -->
+        <div id="historyContainer" hidden>
+            <div id="startingWord" class="wordDisplay text-lg gameplayText smoothMovement startingWord"></div>
+        </div>
+
+
         <!-- Victory stuff -->
-        <div id="victoryContainer">
-            <div id="victoryDisplay" class="wordDisplay text-lg gameplayText" hidden></div>
+        <div id="victoryContainer" hidden>
+            <div id="victoryFlex" class="gameplayText text-lg flex flex-col justify-content-end"></div>
+
             <div id="victoryText" hidden>
                 You got it in <br/>
                 <span class="text-lg">
