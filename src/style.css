@@ -112,13 +112,21 @@ body {
 
 
     overflow-x: visible;
-    overflow-y: auto;
     height: var(--history-display-height);
     padding-top: 0.25cap; /* Adding the padding allows for us to add the scroll fade*/
     padding-bottom: 0.25cap;
 
     scrollbar-gutter: stable both-edges;
 }
+
+.no-scroll {
+    overflow: hidden;
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
 
 #historyList {
     position: absolute;

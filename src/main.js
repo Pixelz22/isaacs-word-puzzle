@@ -124,6 +124,8 @@ function victoryAnimation() {
     }
 
     victoryFlex.scrollTop = victoryFlex.scrollHeight; // force the scroll to start at the bottom
+    victoryFlex.classList.remove("scrollable");
+    victoryFlex.classList.add("no-scroll");
 
     let finalWord = victoryFlex.children[victoryFlex.children.length - 1];
     finalWord.classList.remove("wordHistory");
@@ -150,6 +152,16 @@ function victoryAnimation() {
         victoryText.hidden = false;
         victoryText.style.animation = "reveal 3s ease-in-out forwards";
     }, 5000)
+
+    setTimeout( () => {
+        if (CANCEL_VICTORY_ANIMATION) {
+            CANCEL_VICTORY_ANIMATION = false;
+            return;
+        }
+
+        victoryFlex.classList.remove("no-scroll");
+        victoryFlex.classList.add("scrollable");
+    }, 6000)
 
     setTimeout(() => {
         if (CANCEL_VICTORY_ANIMATION) {
