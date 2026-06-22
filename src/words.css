@@ -126,3 +126,34 @@
         transform: translateX(0);
     }
 }
+
+@keyframes DuplicateHighlight {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-10px);
+        filter: brightness(1.2);
+    }
+
+    40% {
+        transform: translateX(10px);
+        filter: brightness(1.2);
+    }
+
+    60% {
+        transform: translateX(-10px);
+        filter: brightness(1.2);
+    }
+
+    80% {
+        transform: translateX(10px);
+        filter: brightness(1.2);
+    }
+
+    100% {
+        transform: translateX(0);
+        filter: none;
+    }
+}

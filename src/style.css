@@ -21,14 +21,26 @@ body {
     margin: 0;
 }
 
-#helpText {
+.info-box {
     background-color: white;
     border: 2px solid black;
     border-radius: 5px;
-    padding: 0rem 1.25rem;
+    padding: 0rem 1.25ch;
     box-shadow: rgba(0, 0, 0, 0.5) 0 0 20px;
+}
 
-    width: 300px;
+.warning-box {
+    padding: 0.5cap 2.5ch;
+    letter-spacing: 0.1ch;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.warning-revealed {
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity 0.2s ease-in-out; /* this makes it appear fast, but disappear slow */
 }
 
 #closeHelp {
@@ -112,7 +124,6 @@ body {
 
 
     overflow-x: visible;
-    overflow-y: auto;
     height: var(--history-display-height);
     padding-top: 0.25cap; /* Adding the padding allows for us to add the scroll fade*/
     padding-bottom: 0.25cap;
@@ -120,15 +131,24 @@ body {
     scrollbar-gutter: stable both-edges;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
+.scrollable {
+    overflow-y: auto;
+}
+
+
 #historyList {
     position: absolute;
     transform: translate(-50%, 0);
     bottom: -1cap;
 
-    overflow-x: visible;
+    overflow-x: hidden;
     overflow-y: hidden;
     height: var(--history-display-height);
-    width: 7ch;
+    width: 9ch;
 
     padding-top: 0.25cap;
 
