@@ -186,10 +186,18 @@ function victoryAnimation() {
 function badSubmit() {
     playSound("submit-fail");
 
-    INPUT_CONTAINER.style.animation = "none";
+    shakeElement(INPUT_CONTAINER, true);
+}
+
+function shakeElement(element, isInput) {
+    element.style.animation = "none";
     setTimeout(() => {
-        INPUT_CONTAINER.style.animationComposition = "accumulate";
-        INPUT_CONTAINER.style.animation = "NoSubmit 0.5s";
+        element.style.animationComposition = "accumulate";
+        if (isInput) {
+            element.style.animation = "NoSubmit 0.5s";
+        } else {
+            element.style.animation = "DuplicateHighlight 0.5s";
+        }
     });
 }
 
@@ -235,6 +243,12 @@ function hideHelpText() {
     helpText.style.animation = "hide 1s forwards";
 }
 
+function hideWarnings() {
+    for (let w of document.querySelectorAll(".warning-box")) {
+        w.classList.remove("warning-revealed");
+    }
+}
+
 function constructWordDisplay(word) {
     let newBlock = document.createElement("div");
     newBlock.className = "wordDisplay text-lg gameplayText smoothMovement";
@@ -274,26 +288,59 @@ function constructWordHistory(word, lastWord) {
 const SUBMIT_SOUNDS = ["submit-1", "submit-2", "submit-3", "submit-4"];
 let remainingSounds = [...SUBMIT_SOUNDS];
 
+function raiseWarning(warningID) {
+    let warning = document.getElementById(warningID);
+    warning.classList.add("warning-revealed");
+    setTimeout(() => {
+        warning.classList.remove("warning-revealed");
+    }, 2000);
+}
+
 function submitWord() {
     let word = WORD_INPUT.value.toUpperCase();
 
-    if (!assertValidWord(word)) {
+    if (word.length === 0) {
+        raiseWarning("warning-NoWord");
         badSubmit();
         return;
     }
 
-    let lastWord = STARTING_WORD;
-    if (HISTORY.length > 0)
-        lastWord = HISTORY[HISTORY.length - 1];
+    if (word.length < 5) {
+        raiseWarning("warning-ShortWord");
+        badSubmit();
+        return;
+    }
 
-    if (lastWord === word) {
+    if (!assertValidWord(word)) {
+        raiseWarning("warning-InvalidWord");
+        badSubmit();
+        return;
+    }
+
+    if (word === STARTING_WORD) {
+        raiseWarning("warning-DuplicateWord");
+        const startingWordElement = document.getElementById("startingWord");
+        shakeElement(startingWordElement, false);
+        badSubmit();
+        return;
+    }
+
+    const duplicateCheckIdx = HISTORY.indexOf(word)
+    if (duplicateCheckIdx > -1) {
+        let duplicateWordElement = document.getElementById("historyList").children[duplicateCheckIdx + 1];
+        raiseWarning("warning-DuplicateWord");
+        shakeElement(duplicateWordElement, false);
         badSubmit();
         return;
     }
 
     // Check for a valid move
+    let lastWord = STARTING_WORD;
+    if (HISTORY.length > 0)
+        lastWord = HISTORY[HISTORY.length - 1];
     let letterIdx = checkForLetterChange(lastWord, word);
     if (letterIdx < 0 && !checkForAnagram(lastWord, word)) {
+        raiseWarning("warning-InvalidMove");
         badSubmit();
         return;
     }
@@ -382,6 +429,8 @@ function undo() {
 WORD_INPUT.addEventListener("keydown", function (event) {
     if (event.repeat) return;
 
+    hideWarnings();
+
     if (event.key === "Enter") {
         event.preventDefault();
         submitWord();
@@ -413,11 +462,19 @@ CLOSE_HELP_BUTTON.addEventListener("click", function (event) {
     hideHelpText();
 });
 
+for (let w of document.querySelectorAll(".warning-box")) {
+    w.addEventListener("click", function (event) {
+        this.classList.remove("warning-revealed");
+    })
+}
+
 function updateCaret() {
     FAKE_CARET.style.left = (1.25 * WORD_INPUT.value.length) + "ch";
 }
 
 function onKeyboardPress(key) {
+    hideWarnings();
+
     if (key === "ENTER") {
         submitWord();
     }

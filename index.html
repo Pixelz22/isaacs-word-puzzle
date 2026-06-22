@@ -126,13 +126,13 @@
     </div>
 
   <div id="cover" hidden></div>
-  <div id="helpText" class="center" hidden>
+  <div id="helpText" class="center info-box" style="width: 300px;" hidden>
       <p>
           Get from the starting word to the target word in as
           few moves as possible.
       </p>
       <p>
-          <strong>Valid Moves either:</strong><br/>
+          <strong>Valid Moves will either:</strong><br/>
           Change a single letter <br/>
           - OR -<br/>
           Make an anagram.
@@ -143,6 +143,11 @@
           <ion-icon name="close" class="text-md"></ion-icon>
       </button>
   </div>
+  <div id="warning-NoWord" class="center text-xs gameplayText info-box warning-box">PLEASE ENTER A WORD</div>
+  <div id="warning-ShortWord" class="center text-xs gameplayText info-box warning-box">WORD MUST BE 5 LETTERS</div>
+  <div id="warning-InvalidWord" class="center text-xs gameplayText info-box warning-box">NOT IN WORD LIST</div>
+  <div id="warning-InvalidMove" class="center text-xs gameplayText info-box warning-box">NOT A VALID MOVE</div>
+  <div id="warning-DuplicateWord" class="center text-xs gameplayText info-box warning-box">ALREADY DONE THIS WORD</div>
   </body>
 <script src="src/main.js" type="module"></script>
 </html>
