@@ -534,22 +534,26 @@ keyboardButtons.forEach(function (button) {
 
 
 function correctScreenSize() {
-    // Start by figuring out the pixel dimensions of the word displays
-    LG_FONT_SIZE_PX = Number.parseInt(getComputedStyle(document.querySelector(".text-lg")).getPropertyValue("font-size"));
-    let PX_PER_CAP = LG_FONT_SIZE_PX * 0.638; // figure out conversion between cap units and px
-    let wordDisplayHeight = PX_PER_CAP * 2.25;
-    let availableDisplayHeight = window.innerHeight / 2;
-
     // Determine if mobile mode is necessary
     if (window.innerWidth <= 512 && !MOBILE_MODE) {
         setMobileMode(true);
-        availableDisplayHeight -= 24; // In mobile mode, credits are at the top, so we need to leave extra room
     } else if (window.innerWidth > 512 && (MOBILE_MODE || MOBILE_MODE === null)) {
         setMobileMode(false);
     }
 
-    // Figure out how many words we can show in the history display (including input box)
-    let maxDisplays = Math.floor(availableDisplayHeight / wordDisplayHeight);
+    // Start by figuring out the pixel dimensions of the word displays
+    LG_FONT_SIZE_PX = Number.parseInt(getComputedStyle(document.querySelector(".text-lg")).getPropertyValue("font-size"));
+    let PX_PER_CAP = LG_FONT_SIZE_PX * 0.638; // figure out conversion between cap units and px
+    let wordDisplayHeight = PX_PER_CAP * WORD_DISPLAY_OFFSET;
+    let availableDisplayHeight = window.innerHeight / 2;
+    availableDisplayHeight -= PX_PER_CAP; // Subtract half a wordDisplay to account for input box
+    if (MOBILE_MODE) availableDisplayHeight -= 48; // Leave some space for the credits in mobile mode. Magic numbers go brrrrrr
+    console.log(availableDisplayHeight);
+    console.log(wordDisplayHeight);
+
+    // Figure out how many words we can show in the history display (+1 for input box)
+    let maxDisplays = Math.floor(availableDisplayHeight / wordDisplayHeight) + 1;
+    // if (MOBILE_MODE) maxDisplays -= 1; // Leave some room for the credits at the top
     let historyDisplayHeight = maxDisplays * 2 + (maxDisplays - 1) * 0.25;
     // Set the display height variable to match
     let r = document.querySelector(":root");
