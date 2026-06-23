@@ -189,14 +189,14 @@ function badSubmit() {
     shakeElement(INPUT_CONTAINER, true);
 }
 
-function shakeElement(element, isInput) {
+function shakeElement(element, shakeRight) {
     element.style.animation = "none";
     setTimeout(() => {
         element.style.animationComposition = "accumulate";
-        if (isInput) {
-            element.style.animation = "NoSubmit 0.5s";
+        if (shakeRight) {
+            element.style.animation = "ShakeRight 0.5s";
         } else {
-            element.style.animation = "DuplicateHighlight 0.5s";
+            element.style.animation = "ShakeLeft 0.5s";
         }
     });
 }
@@ -321,6 +321,10 @@ function submitWord() {
         raiseWarning("warning-DuplicateWord");
         const startingWordElement = document.getElementById("startingWord");
         shakeElement(startingWordElement, false);
+        startingWordElement.classList.add("duplicateHighlight");
+        setTimeout(() => {
+            startingWordElement.classList.remove("duplicateHighlight");
+        }, 500);
         badSubmit();
         return;
     }
@@ -330,6 +334,10 @@ function submitWord() {
         let duplicateWordElement = document.getElementById("historyList").children[duplicateCheckIdx + 1];
         raiseWarning("warning-DuplicateWord");
         shakeElement(duplicateWordElement, false);
+        duplicateWordElement.classList.add("duplicateHighlight");
+        setTimeout(() => {
+            duplicateWordElement.classList.remove("duplicateHighlight");
+        }, 500);
         badSubmit();
         return;
     }
